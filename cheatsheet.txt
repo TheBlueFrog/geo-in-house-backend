@@ -1,0 +1,13 @@
+
+on cloud box
+
+ssh -i ~/Downloads/pairtwo.pem root@10.64.186.4
+
+
+
+on local machine to ftp
+
+sftp -i ~/Downloads/pairtwo.pem root@10.64.186.4
+
+
+curl --header "HTTP_X_GUID:%20lkslks" http://66.211.190.18/a.pl
