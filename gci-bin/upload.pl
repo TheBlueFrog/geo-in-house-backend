@@ -1,21 +1,21 @@
 #!/usr/bin/perl
 	
-    my($local_files) = '/var/www/data';
+  my($local_files) = '/var/www/data';
 
-    local ($buffer, @pairs, $pair, $name, $value, %FORM);
-    
-print "Content-type:text/html\r\n\r\n";
-print "<html>";
-print "<head>";
-    
-    $ENV{'REQUEST_METHOD'} =~ tr/a-z/A-Z/;
-    if ($ENV{'REQUEST_METHOD'} eq "POST")
-    {
-        read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
-		print "<title>Received POST</title>";
-    }
-    else
-    {
+  local ($buffer, @pairs, $pair, $name, $value, %FORM);
+  
+  print "Content-type:text/html\r\n\r\n";
+  print "<html>";
+  print "<head>";
+  
+  $ENV{'REQUEST_METHOD'} =~ tr/a-z/A-Z/;
+  if ($ENV{'REQUEST_METHOD'} eq "POST")
+  {
+      read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
+  		print "<title>Received POST</title>";
+  }
+  else
+  {
 		$buffer = $ENV{'QUERY_STRING'};
 		print "<title>Received GET, not supported</title>";
 		print "</head>";
@@ -23,21 +23,21 @@ print "<head>";
 		print "</body>";
 		print "</html>";
 		die;
-    }
+  }
 
-    # Split content into param pairs put in a table
-    @pairs = split(/&/, $buffer);
-    foreach $pair (@pairs)
-    {
-		($name, $value) = split(/=/, $pair);
-		$value =~ tr/+/ /;
-		$value =~ s/%(..)/pack("C", hex($1))/eg;
-		$FORM{$name} = $value;
-    }
-    $customer_id = $FORM{customer_id};
-    $dataset_path = $FORM{dataset_path};
-    $dataset_name = $FORM{dataset_name};
-    $the_data  = $FORM{data};
+  # Split content into param pairs put in a table
+  @pairs = split(/&/, $buffer);
+  foreach $pair (@pairs)
+  {
+	($name, $value) = split(/=/, $pair);
+	$value =~ tr/+/ /;
+	$value =~ s/%(..)/pack("C", hex($1))/eg;
+	$FORM{$name} = $value;
+  }
+  $customer_id = $FORM{customer_id};
+  $dataset_path = $FORM{dataset_path};
+  $dataset_name = $FORM{dataset_name};
+  $the_data  = $FORM{data};
     
 	$path = "$local_files/uploads/$customer_id/$dataset_path";
 		
@@ -77,7 +77,7 @@ print "<head>";
          print "try to create $x<br>";
          mkdir ($x);
          if ( ! (-e $x))
-	 {
+      	 {
             print "failed to create $x<br>";
          }
       }
@@ -98,10 +98,15 @@ print "<head>";
     print MYFILE "$the_data\n";
     close (MYFILE);
 
-	$the_data = "";
+  	$the_data = "";
     print "<h2>OK, data uploaded to $path/$dataset_name</h2>";
 }
 #}
+
+# now invoke the data reduction code since we have an upload
+#print "<br>";
+#print `java -cp /var/www/cgi-bin/bin com.ebay.mike.XX`;
+#print "<br>";
 
 print "</body>";
 print "</html>";
