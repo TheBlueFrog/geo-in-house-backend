@@ -2,7 +2,6 @@ package com.ebay.mike;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,12 +11,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 
@@ -61,7 +59,7 @@ public class Register
 		mAppID = params.get("AppID");
 		mAppName  = params.get("AppName");
 		mSiteID = params.get("SiteID");
-		mDeviceID3PP = params.get("3PPDeviceID");
+		mDeviceID3PP = params.get("DeviceID3PP");
 		mNotificationSystem = params.get("NotificationSystem");	// "GCM" = Google, "APNS" = Apple
 		mLanguage  = params.get("Language");
 		mUserName = params.get("UserName");
@@ -128,6 +126,10 @@ public class Register
 	        
 			System.out.println("hello");
 		}
+		catch (UnsupportedEncodingException e)
+		{
+			System.out.println("UnsupportedEncodingException " + e.getMessage());
+		}
 		catch (IOException e)
 		{
 			System.out.println("IOException " + e.getMessage());
@@ -186,7 +188,7 @@ public class Register
 </soap:Envelope>
 	 */
 	
-	private static void addBody(HttpPost r)
+	private static void addBody(HttpPost r) throws UnsupportedEncodingException
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:ser=\"http://www.ebay.com/marketplace/mobile/v1/services\">")
@@ -228,12 +230,16 @@ public class Register
 		  .append(    "</ser:setMessageSubscription>")
 		  .append(  "</soap:Body>")
 		  .append("</soap:Envelope>");
+		
+		StringEntity xmlEntity = new StringEntity(sb.toString(), "UTF-8");
+		r.setEntity(xmlEntity );
 	}
 
 	private static void addHeaders(HttpPost r)
 	{
 		Header[] v = new Header[] 
 		{
+			new BasicHeader("Content-Type", "application/xml"),
 			new BasicHeader("X-EBAY-SOA-OPERATION-NAME", "setMessageSubscription"),
 			new BasicHeader("X-EBAY-SOA-SECURITY-APPNAME", mAppID),
 			new BasicHeader("X-EBAY-SOA-SERVICE-NAME", "MobileDeviceNotificationService"),
@@ -247,12 +253,12 @@ public class Register
 
 	private static void addParams(HttpPost r) throws UnsupportedEncodingException
 	{
-	    ArrayList<BasicNameValuePair> v = new ArrayList<BasicNameValuePair>();
-	    v.add(new BasicNameValuePair("GUID", mInstallationGUID));
-	    v.add(new BasicNameValuePair("GCMID", mGCMRegistrationID));
-	    v.add(new BasicNameValuePair("AppID", mAppID));
-
-	    r.setEntity(new UrlEncodedFormEntity(v, "UTF-8"));
+//	    ArrayList<BasicNameValuePair> v = new ArrayList<BasicNameValuePair>();
+//	    v.add(new BasicNameValuePair("GUID", mInstallationGUID));
+//	    v.add(new BasicNameValuePair("GCMID", mGCMRegistrationID));
+//	    v.add(new BasicNameValuePair("AppID", mAppID));
+//
+//	    r.setEntity(new UrlEncodedFormEntity(v, "UTF-8"));
 	}
 
 }
