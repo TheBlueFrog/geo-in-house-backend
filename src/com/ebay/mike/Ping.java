@@ -100,8 +100,8 @@ public class Ping
             		};
 	            		
 	            String responseBody = httpclient.execute(r, responseHandler);
-	            System.out.println("----------------------------------------");
-	            System.out.println(responseBody);
+	            Log("----------------------------------------");
+	            Log(responseBody);
 	        }
 	        finally 
 	        {
@@ -112,14 +112,24 @@ public class Ping
 		}
 		catch (UnsupportedEncodingException e)
 		{
-			System.out.println("UnsupportedEncodingException " + e.getMessage());
+			Log("UnsupportedEncodingException " + e.getMessage());
 		}
 		catch (IOException e)
 		{
-			System.out.println("IOException " + e.getMessage());
+			Log("IOException " + e.getMessage());
 		}
 	}
 
+	static private void Log(String s)
+	{
+		System.out.println(s);		
+	}
+	static private void Log(Header[] a)
+	{
+		for(Header h : a)
+			Log(h.getName() + ": " + h.getValue());
+	}
+	
 	/* from the docs
 	 
 <SendMessageRequest>
@@ -185,6 +195,8 @@ public class Ping
 		  .append("</SendMessageRequest>")
 		  ;
 		
+		Log(sb.toString());
+		
 		StringEntity xmlEntity = new StringEntity(sb.toString(), "UTF-8");
 		r.setEntity(xmlEntity );
 	}
@@ -197,6 +209,8 @@ public class Ping
 			new BasicHeader("Authorization", mSOAAppName),
 			new BasicHeader("Accept", "application/xml"),
 		};
+		Log(v);
+		
         r.setHeaders(v);
 	}
 
@@ -210,4 +224,18 @@ public class Ping
 //	    r.setEntity(new UrlEncodedFormEntity(v, "UTF-8"));
 	}
 
+	/*
+	 	https://mobinotify.ebay.com/mobile/mds/v1/sendMessages
+	 	Content-Type: application/xml
+		Authorization: eBayInc73-c2b2-4710-876a-f3184aabbe8
+		Accept: application/xml
+
+		<SendMessageRequest>
+			<MsgTier>Tier1</MsgTier>
+			<Message>
+				<Receiver>
+				<Type>User</Type><Provider>EbayInc</Provider><Id>mike@fred</Id><Domain>frlibtest</Domain<Application>FRLIB_TEST_2</Application<EventName>ping</EventName></Receiver><Data><Payload><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MessagePayload><AlertText>Test Notification PING!!</AlertText><Level1Data><Data><Key>evt</Key><Value>ping</Value></Data><Data><Key>usr</Key><Value>mike@fred</Value></Data><Data><Key>key1</Key><Value>value1</Value></Data></Level1Data></MessagePayload>]]></Payload><FormatRequired>true</FormatRequired></Data></Message></SendMessageRequest>
+
+	 
+	 */
 }
