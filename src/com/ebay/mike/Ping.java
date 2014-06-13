@@ -165,8 +165,8 @@ public class Ping
 		  .append(      "<Type>User</Type>")
 		  .append(      "<Provider>").append("EbayInc").append("</Provider>")
 		  .append(      "<Id>").append(mUserName).append("</Id>")
-		  .append(      "<Domain>").append(mMDNSEventDomain).append("</Domain")
-		  .append(      "<Application>").append(mApplication).append("</Application")
+		  .append(      "<Domain>").append(mMDNSEventDomain).append("</Domain>")
+		  .append(      "<Application>").append(mApplication).append("</Application>")
 		  .append(      "<EventName>ping</EventName>")
 		  .append(    "</Receiver>")
 		  .append(    "<Data>")
@@ -230,11 +230,42 @@ public class Ping
 		Authorization: eBayInc73-c2b2-4710-876a-f3184aabbe8
 		Accept: application/xml
 
-		<SendMessageRequest>
-			<MsgTier>Tier1</MsgTier>
-			<Message>
-				<Receiver>
-				<Type>User</Type><Provider>EbayInc</Provider><Id>mike@fred</Id><Domain>frlibtest</Domain<Application>FRLIB_TEST_2</Application<EventName>ping</EventName></Receiver><Data><Payload><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MessagePayload><AlertText>Test Notification PING!!</AlertText><Level1Data><Data><Key>evt</Key><Value>ping</Value></Data><Data><Key>usr</Key><Value>mike@fred</Value></Data><Data><Key>key1</Key><Value>value1</Value></Data></Level1Data></MessagePayload>]]></Payload><FormatRequired>true</FormatRequired></Data></Message></SendMessageRequest>
+<SendMessageRequest>
+  <MsgTier>Tier1</MsgTier>
+  <Message>
+    <Receiver>
+      <Type>User</Type>
+      <Provider>EbayInc</Provider>
+      <Id>mike@fred</Id>
+      <Domain>frlibtest</Domain>
+      <Application>FRLIB_TEST_2</Application>
+      <EventName>ping</EventName>
+    </Receiver>
+    <Data>
+      <Payload>
+        <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+          <MessagePayload>
+            <AlertText>Test Notification PING!!</AlertText>
+            <Level1Data>
+              <Data>
+                <Key>evt</Key>
+                <Value>ping</Value>
+              </Data>
+              <Data>
+                <Key>usr</Key>
+                <Value>mike@fred</Value>
+              </Data>
+              <Data>
+                <Key>key1</Key>
+                <Value>value1</Value>
+              </Data>
+            </Level1Data>
+          </MessagePayload>]]>
+      </Payload>
+      <FormatRequired>true</FormatRequired>
+    </Data>
+  </Message>
+</SendMessageRequest>
 
 	 
 	 */
