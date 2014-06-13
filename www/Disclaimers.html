@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>GeoFenceService Disclaimers</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<style type="text/css">
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+</style>
+</head>
+<body>
+ <div class="container">
+
+	<h2>GeoFence Research</h2>
+
+	<h4>Disclaimers</h4>
+	This app is mildly invasive of your privacy. All collected and uploaded
+	data is labeled only by an installation GUID. That doesn't mean it's
+	not identifiable, especially since the whole project is designed to
+	identify you.
+	<p>The chief goal is to decide if we can effectively use
+		movement/location patterns to help out with identify problems.
+	<p>Briefly, the device's physical activity is monitored at a set
+		frequency (see the settings page) and at interesting changes in
+		activity a location is obtained. This raw data is uploaded to the
+		servers for analysis.
+	<p>Based on the analysis GeoFences may be setup at interesting
+		places, these can be downloaded back onto the device via the Download
+		menu item.
+	<p>All data is assumed to be freely given and all results are
+		freely available.
+	<h4>Feedback</h4>
+	Feedback is solicited and appreciated. Send to my work email please.
+	<p>I am very interested to hear if you notice any battery
+		degradation, from what I can tell there is very little impact.
+	<h4>Supported Devices</h4>
+	Android SDK 17 and later.
+
+<h4>Privacy</h4>
+Some care has been put into how the data collected by this software is managed.
+There are two different aspects to this.  First is the data collected for research
+purposes, what is collected is not well defined since it is continuously mutating
+and how it is used is ill-defined since that's why we are doing the research.  As
+such I'm not saying much about it beyond there is some and it may be used, with
+normal safeguards.
+<p>
+The second kind of data is a bit different, to a large part it is fall out from
+the basic data collection <i>however</i> in an attempt to provide you, the 
+users with some value, in the hopes of keeping you around.  There are now
+some ways for devices to communicate geoinformation with each other.  This
+has raised some issues about privacy, I'm following some basic rules to
+manage this
+<ul>
+	<li>Stuff is tested inside my family before exanding to a wider audience.
+		While I do have a bit of leverage because I pay the bills nothing
+		gets out that's too big-brotherish.
+	</li>
+	<li>Anything that leaves your device that will appear on another device
+		is your data and you had to deliberately set it up so it leaves.  By
+		default nothing leaves.
+	</li>
+	<li>The exception to the previous rule is the menu item "Ping Server", this
+		event is sent to the servers and forwarded to all registered application
+		instances.  At this time you can't opt-out of this one, I plan on removing
+		it soon-ish but it has proved to be invaluable for testing.
+	</li>
+</ul>
+
+</body>
+</html>
