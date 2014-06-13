@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<title>GeoFence Research and Fresh Coffee</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<style type="text/css">
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+</style>
+
+<script type="text/javascript">
+
+API_URL = 'https://' + window.location.host + '/_ah/api';
+
+function loadGapi() {  }
+
+</script>
+</head>
+
+<body>
+ <div class="container">
+
+<h2>GeoFence Research and Fresh Coffee</h2>
+Web page updated Jan 16 2014, 4pm PST.
+
+<h4>Links</h4>
+<p>
+	<ul>
+		<li>
+			<a href="Disclaimers.html">Disclaimers</a>
+		</li>
+		<li>
+			<a href="Obtaining.html">Getting the FreshCoffee app</a>
+		</li>
+		<li>
+			<a href="Background.html">Background Notes</a>
+		</li>
+	</ul>
+<p>
+
+<h4>Phone Restart</h4>
+The GeoFenceService does not automatically restart on a phone restart.  A notification
+will be posted asking you to restart it however.
+
+
+<h4>News</h4>
+
+A FreshCoffee feature has been added to the application.  The eBay PDX 9th Floor
+coffee machine has had software added so that when fresh coffee is brewed a
+notification is sent to all registered devices (that have not opted-out) that
+there is fresh coffee available.
+<p>
+In the next iteration this notification will be dependent on the device being within a
+GeoFence around the office.  Devices outside the fence will not be notified,
+those inside will be.
+<p>
+An additional feature of being notified of how old the coffee is when a device
+enters the office fence is planned.
+
+Enjoy.
+
+
+<p>
+<h4>Data Stream Maps</h4>
+The map is a work in progress and as such is functionally evolving and the data 
+is updated frequently.
+<p>
+If for any reason you do not wish for your device's data to appear in the maps
+send me email with the data stream GUID and I will add it to the exclusion list.
+
+<p>
+This
+<a href="styledmarker/examples/simple.htm">map</a>
+ shows some information about the data streams.  Places have markers, which can
+ be clicked to obtain more information about that place.
+of the location reports.
+
+<p>
+On the left are selectors for the data stream information to display, select one or more.
+A data stream is roughly map onto a phone installation, although re-installation
+will usually be the same stream because data is persisted to the SD card.
+
+<p>
+To the right of the streams are some filters for selecting subsets of the Places in the
+data stream to display.   A Place is defined as a physical location where the device was
+not moving.  By not moving I mean not changing location from the perspective of the
+GPS location.  Technically it is period where the device activity (as reported by 
+<a href="http://developer.android.com/training/location/activity-recognition.html">this</a>
+Android API) is not one of the activities in the set ( InVehicle, OnBicycle, OnFoot ).
+
+<p>
+Visits to places are when the device is located near a place for a period of time.  So,
+visits specify a time and duration at a place for the given data stream. 
+
+<p>
+The filters let you see places with a range of visit counts.  By default the “more than 15
+visits” is enabled.  This is an empirically derived value.
+
+<p>
+Place markers are color coded to the data stream.
+
+<p>
+Clicking on a place marker will update the two charts, one shows the distribution of visits
+across a day.  The other shows the distribution of the duration of the visits.
+
+<p>
+A check box at the bottom displays data stream intersections.  An Intersection is where two
+or more data streams intersect in place and possibly time.  One data stream may be in a
+Given place at a different time than another data stream, if so that’s a place-only intersection.
+Or two data streams may intersect in both place and time, that’s called a place-time intersection.
+
+<p>
+Clicking an intersection marker will display the streams and the number of visits each had to
+the given place.  The time-of-day chart shows the number of concurrent data streams at
+the place over time, again all days are folded on top of each other.
+
+
+<h4>Server Data</h4>
+<p>
+<a href="TestJava">Here</a>
+is a page showing server information on data streams (ApplicationID), fences and 
+event forwardings.  This is real-time view until things get too large.
+
+
+ <div class='container navbar navbar-fixed-bottom'>
+  <p class='text-error'>
+   <small>NOTE: This page is not protected by authentication! If
+    you decide to deploy this application, anyone will be able to access
+    it.
+   </small>
+  </p>
+ </div>
+
+ <!-- JavaScript -->
+ <script src="https://apis.google.com/js/client.js?onload=loadGapi">
+  {
+    "client": {},
+      "googleapis.config": {
+        root: API_URL
+      }
+  }
+ </script>
+ <script src="js/jquery-1.9.0.min.js"></script>
+ <script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
