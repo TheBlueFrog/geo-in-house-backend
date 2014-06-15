@@ -6,7 +6,8 @@ public class AbstractRecord {
 	protected static final String END_SYMBOL = "}";
 	protected static final String FIELD_SEPARATOR = "|";
 
-	public AbstractRecord() {
+	public AbstractRecord() 
+	{
 		super();
 	}
 
