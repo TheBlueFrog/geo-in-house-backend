@@ -4,23 +4,27 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.ebay.mike.geodb.InstallationRecord;
+import com.ebay.mike.geodb.FenceRecord;
 
 /**
- * add a new fence
+ * add a new fence to an installation
  */
-public class PutNewInstallation
+public class PutNewFence
 {
 	/**
 	 * app does a POST to http://66.211.190.18/cgi-bin/toJava.pl
 	 * 
-	 * if OpCode = PutNewInstallation we get here
-	 * we return a new installation record
+	 * if OpCode = PutNewFence we get here
+	 * we return a new FenceRecord
 
 	 * args
-	 * [0] = new installation GUID
-	 * [1] = display name
-	 * [2] = new GCM registration ID 
+	 * [0] owning installation GUID
+	 * [1] display name
+	 * [2] latitude 
+	 * [3] longitude
+	 * [4] radius
+	 * [5] events
+	 * [6] URI
 	 */
 	
 	public static void main(String[] args)
@@ -35,8 +39,15 @@ public class PutNewInstallation
 		    {
 		      db = DriverManager.getConnection("jdbc:sqlite:fencenotification.db");
 
-		      InstallationRecord r = new InstallationRecord(db, args[0], args[1], args[2]);
-		      
+		      FenceRecord r = new FenceRecord(db, 
+		    		  args[0], 						// installation GUID
+		    		  args[1], 						// displayName
+		    		  Double.parseDouble(args[2]),	// lat
+		    		  Double.parseDouble(args[3]),	// lon
+		    		  Double.parseDouble(args[4]),	// radius
+		    		  Integer.parseInt(args[5]),	// events
+		    		  args[6]);						// URI
+
 		      System.out.println(r.toString());
 		    }
 		    catch(SQLException e)

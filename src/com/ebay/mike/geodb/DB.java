@@ -164,5 +164,30 @@ public class DB
 		}
 	}
 
+	public static List<FenceRecord> getAllFences(Connection db, String installation) throws SQLException
+	{
+		PreparedStatement s = null;
+		
+		try 
+		{
+			List<FenceRecord> v = new ArrayList<FenceRecord>();
+			long id = getGuidID(db, installation);
+			String q = String.format("select * from Fences where (InstallationID = %d)", id);
+			s = db.prepareStatement(q);
+			ResultSet rs = s.executeQuery();
+			while (rs.next())
+			{
+				v.add(new FenceRecord(rs));
+			}
+			return v;
+			
+		} 
+		finally
+		{
+			if (s != null)
+				s.close();
+		}
+	}
+
 
 }
