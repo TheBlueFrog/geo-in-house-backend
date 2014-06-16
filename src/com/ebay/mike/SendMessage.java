@@ -19,18 +19,21 @@ import org.apache.http.util.EntityUtils;
 
 /**
  */
-public class Ping
+public class SendMessage
 {
 	/**
 	 * app does a POST to http://66.211.190.18/cgi-bin/toJava.pl
 	 * with params in args[] as name-value pairs
 	 * 
+	 * args
+	 * [0, 1] = "OpCode", "SendMessage"
+	 * [2, 3] = name, value
 	 */
 	
-	static String mSOAAppName 			= "eBayInc73-c2b2-4710-876a-f3184aabbe8";
-	static String mDomain 				= "frlibtest";
-	static String mApplication			= "FRLIB_TEST_2";
 	static String mIdentityProvider		= "EbayInc";
+	static String mSOAAppName 			= "eBayInc73-c2b2-4710-876a-f3184aabbe8";
+	static String mApplication			= "FRLIB_TEST_2";
+	static String mDomain 				= "frlibtest";
 	static String mUserName         	= "mike@fred";
 	static String mEventName			= "ping";
 	static String mMessage   			= "";
@@ -116,7 +119,7 @@ public class Ping
             		};
 	            		
 	            String responseBody = httpclient.execute(r, responseHandler);
-	            Log("----------------------------------------");
+//	            Log("----------------------------------------");
 	            Log(responseBody);
 	        }
 	        finally 

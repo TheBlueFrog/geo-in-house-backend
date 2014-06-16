@@ -8,6 +8,6 @@ unzip src.zip
 rm -Rf __MACOSX
 
 mkdir bin
-javac -d bin src/com/ebay/mike/Ping.java 
+javac -d bin src/com/ebay/mike/SendMessage.java 
 
 
