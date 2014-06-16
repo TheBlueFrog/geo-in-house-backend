@@ -17,7 +17,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
-
+/**
+ */
 public class Ping
 {
 	/**
@@ -26,19 +27,38 @@ public class Ping
 	 * 
 	 */
 	
-	static String mInstallationGUID;
-	static String mGCMRegistrationID;
 	static String mSOAAppName 			= "eBayInc73-c2b2-4710-876a-f3184aabbe8";
-	static String mAppName;
-	static String mSiteID 				= "EBAY-US";
-	static String mDeviceID3PP;
-	static String mNotificationSystem;
-	static String mMDNSEventDomain 		= "frlibtest";
+	static String mDomain 				= "frlibtest";
 	static String mApplication			= "FRLIB_TEST_2";
-	static String mLanguage;
+	static String mIdentityProvider		= "EbayInc";
 	static String mUserName         	= "mike@fred";
-	static String mIdentityProvider;
-	static Map<String, String> mSubscriptionEvents;
+	static String mEventName			= "ping";
+	static String mMessage   			= "";
+	
+	
+	static String mPayload 				= 
+			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+			+ "<MessagePayload>"
+			+   "<AlertText>Notification</AlertText>"       
+			+   "<Level1Data>"
+			+   "--body--"
+//			+     "<Data>"                                              
+//			+       "<Key>evt</Key>"                                    
+//			+       "<Value>ping</Value>"                               
+//			+     "</Data>"                                             
+//			+     "<Data>"                                              
+//			+       "<Key>usr</Key>"                                    
+//			+       "<Value>mike@fred</Value>"                          
+//			+     "</Data>"                                             
+//			+     "<Data>"                                              
+//			+       "<Key>key1</Key>"                                   
+//			+       "<Value>value1</Value>"                             
+//			+     "</Data>"                                             
+			+   "</Level1Data>"                                         
+			+ "</MessagePayload>"
+			;
+	
+	
 	
 	public static void main(String[] args)
 	{
@@ -54,17 +74,13 @@ public class Ping
 
 		// extract params
 		
-//		mInstallationGUID = params.get("InstallationGUID");
-//		mGCMRegistrationID = params.get("RegistrationID");
-//		mAppID = params.get("AppID");
-//		mAppName  = params.get("AppName");
-//		mSiteID = params.get("SiteID");
-//		mDeviceID3PP = params.get("DeviceID3PP");
-//		mNotificationSystem = params.get("NotificationSystem");	// "GCM" = Google, "APNS" = Apple
-//		mLanguage  = params.get("Language");
-//		mUserName = params.get("UserName");
-//		mIdentityProvider = params.get("IdentityProvider");
-//		mMDNSEventDomain = params.get("MDNSEventDomain");
+		mSOAAppName = params.get("SOAAppName");
+		mDomain = params.get("Domain");
+		mApplication = params.get("Application");
+		mIdentityProvider = params.get("IdentityProvider");
+		mUserName  = params.get("UserName");
+		mEventName = params.get("EventName");
+		mMessage = params.get("Message");
 		
 		// and forward to MDNS
 		
@@ -157,38 +173,22 @@ public class Ping
 	
 	private static void addBody(HttpPost r) throws UnsupportedEncodingException
 	{
+		String body = mPayload.replace("--body--", mMessage);
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("<SendMessageRequest>")
 		  .append(  "<MsgTier>").append("Tier1").append("</MsgTier>")
 		  .append(  "<Message>")
 		  .append(    "<Receiver>")
 		  .append(      "<Type>User</Type>")
-		  .append(      "<Provider>").append("EbayInc").append("</Provider>")
+		  .append(      "<Provider>").append(mIdentityProvider).append("</Provider>")
 		  .append(      "<Id>").append(mUserName).append("</Id>")
-		  .append(      "<Domain>").append(mMDNSEventDomain).append("</Domain>")
+		  .append(      "<Domain>").append(mDomain).append("</Domain>")
 		  .append(      "<Application>").append(mApplication).append("</Application>")
-		  .append(      "<EventName>ping</EventName>")
+		  .append(      "<EventName>").append(mEventName).append("</EventName>")
 		  .append(    "</Receiver>")
 		  .append(    "<Data>")
-          .append(      "<Payload><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
-		  .append(        "<MessagePayload>")                                             
-		  .append(          "<AlertText>Test Notification PING!!</AlertText>")            
-		  .append(          "<Level1Data>")	                                            
-		  .append(            "<Data>")                                                   
-		  .append(              "<Key>evt</Key>")                                         
-		  .append(              "<Value>ping</Value>")                                    
-		  .append(            "</Data>")                                                  
-		  .append(            "<Data>")                                                   
-		  .append(              "<Key>usr</Key>")                                         
-		  .append(              "<Value>mike@fred</Value>")                               
-		  .append(            "</Data>")                                                  
-		  .append(            "<Data>")                                                   
-		  .append(              "<Key>key1</Key>")                                        
-		  .append(              "<Value>value1</Value>")                                  
-		  .append(            "</Data>")                                                  
-		  .append(          "</Level1Data>")                                              
-		  .append(        "</MessagePayload>]]>")                                         
-		  .append(      "</Payload>")
+          .append(      "<Payload>").append("<![CDATA[").append(body).append("]]>").append("</Payload>")
 		  .append(      "<FormatRequired>true</FormatRequired>")
 		  .append(    "</Data>")
 		  .append(  "</Message>")
@@ -206,7 +206,7 @@ public class Ping
 		Header[] v = new Header[] 
 		{
 			new BasicHeader("Content-Type", "application/xml"),
-			new BasicHeader("Authorization", mSOAAppName),
+			new BasicHeader("Authorization", "APP " + mSOAAppName),
 			new BasicHeader("Accept", "application/xml"),
 		};
 		Log(v);
