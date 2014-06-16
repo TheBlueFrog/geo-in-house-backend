@@ -11,3 +11,39 @@ sftp -i ~/Downloads/pairtwo.pem root@10.64.186.4
 
 
 curl --header "HTTP_X_GUID:%20lkslks" http://66.211.190.18/a.pl
+
+
+root@secondtry-1-51064:/var/www/cgi-bin# java -cp $CLASSPATH:bin com.ebay.mike.Ping 
+Content-Type: application/xml
+Authorization: APP null
+Accept: application/xml
+<SendMessageRequest><MsgTier>Tier1</MsgTier><Message><Receiver><Type>User</Type><Provider>null</Provider><Id>null</Id><Domain>null</Domain><Application>null</Application><EventName>null</EventName></Receiver><Data><Payload><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MessagePayload><AlertText>Notification</AlertText><Level1Data><Data><Key>evt</Key><Value>ping</Value></Data><Data><Key>usr</Key><Value>mike@fred</Value></Data><Data><Key>key1</Key><Value>value1</Value></Data></Level1Data></MessagePayload>]]></Payload><FormatRequired>true</FormatRequired></Data></Message></SendMessageRequest>
+IOException Unexpected response status: 401
+
+
+CREATE TABLE Installations 
+	(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+	 Guid TEXT, 
+	 DisplayName TEXT, 
+	 GCMRegistrationID TEXT);
+CREATE TABLE Fences
+    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    InstallationID INTEGER, 
+    Guid TEXT, 
+    DisplayName TEXT,
+ 	Latitude NUMBER, Longitude NUMBER, 
+ 	Radius NUMBER, 
+ 	Events INTEGER, 
+ 	URI TEXT);
+CREATE TABLE EventForwardings
+    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    FenceID INTEGER,
+    InstallationID INTEGER,
+    IncomingEventType INTEGER
+    );
+CREATE TABLE EvemtForwardingTargets
+    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+	EvenForwardingID INTEGER,
+	InstallationID INTEGER
+	);
+	
