@@ -1,5 +1,10 @@
 package com.ebay.mike.geodb;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
 	CREATE TABLE EventForwardings
 	    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
@@ -14,9 +19,10 @@ public class EventForwardingRecord extends AbstractRecord
 	public long mFenceID;
 	public long mInstallationID;
 	public int mIncomingEventType;
+	private List<EventForwardingTargetRecord> mTargets;
+	private Connection mDB;
 	
-	
-	
+		
 	public EventForwardingRecord(String s)
 	{
 		int start = s.indexOf(START_SYMBOL);
@@ -29,8 +35,27 @@ public class EventForwardingRecord extends AbstractRecord
 		mIncomingEventType = Integer.parseInt(a[3]);
 	}
 	
+	public EventForwardingRecord(Connection db, ResultSet rs) throws SQLException 
+	{
+		mDB = db;
+		
+		mID = rs.getLong(1);
+		mFenceID = rs.getLong(2);
+		mInstallationID = rs.getLong(3);
+		mIncomingEventType = rs.getInt(4);
+
+		mTargets = getForwardingTargets(mDB);
+	}
+
 	public String toString() 
 	{
+		StringBuilder sb = new StringBuilder();
+		sb.append (START_SYMBOL);
+		for (EventForwardingTargetRecord t : mTargets)
+			sb.append(DB.getInstallationGuid(mDB, t.mInstallationID));
+		sb.replace(sb.length() - 1, sb.length(), "");
+		sb.append(END_SYMBOL);
+		
 		return String.format("%s%d%s%d%s%d%s%d%s",
 				START_SYMBOL,
 				mID,
@@ -43,4 +68,9 @@ public class EventForwardingRecord extends AbstractRecord
 				END_SYMBOL);
 	}
 
+	public List<EventForwardingTargetRecord> getForwardingTargets (Connection db) throws SQLException
+	{
+		List<EventForwardingTargetRecord> v = DB.getEventForwardingTargets(db, mFenceID);
+		return v;
+	}
 }

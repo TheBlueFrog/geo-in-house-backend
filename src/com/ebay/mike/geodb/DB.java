@@ -37,13 +37,13 @@ public class DB
 	 
 		Url					an URL for the app to use with the fence 
 	
-	EventForwardingTable
+	EventForwardings
 		id
 		FenceID
 		InstallationID		row id of Installation
 		IncomingEventType
 		
-	ForwardingTargetsTable
+	EventForwardingTargets
 		id
 		EvenForwardingID	EventForwarding row id we belong to
 		InstallationID		row id of Installation to forward the event to
@@ -189,5 +189,55 @@ public class DB
 		}
 	}
 
+	public static List<EventForwardingRecord> getAllEventForwardings(
+			Connection db, String installation) throws SQLException 
+	{
+		PreparedStatement s = null;
+		
+		try 
+		{
+			List<EventForwardingRecord> v = new ArrayList<EventForwardingRecord>();
+			long id = getGuidID(db, installation);
+			String q = String.format("select * from EventForwardings where (InstallationID = %d)", id);
+			s = db.prepareStatement(q);
+			ResultSet rs = s.executeQuery();
+			while (rs.next())
+			{
+				v.add(new EventForwardingRecord(rs));
+			}
+			return v;
+			
+		} 
+		finally
+		{
+			if (s != null)
+				s.close();
+		}
+	}
+
+	public static List<EventForwardingTargetRecord> getEventForwardingTargets(
+			Connection db, long fenceID) throws SQLException 
+	{
+		PreparedStatement s = null;
+		
+		try 
+		{
+			List<EventForwardingTargetRecord> v = new ArrayList<EventForwardingTargetRecord>();
+			String q = String.format("select * from EventForwardingTargets where (FenceID = %d)", fenceID);
+			s = db.prepareStatement(q);
+			ResultSet rs = s.executeQuery();
+			while (rs.next())
+			{
+				v.add(new EventForwardingTargetRecord(rs));
+			}
+			return v;
+			
+		} 
+		finally
+		{
+			if (s != null)
+				s.close();
+		}
+	}
 
 }
