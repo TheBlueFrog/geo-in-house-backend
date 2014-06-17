@@ -1,5 +1,8 @@
 package com.ebay.mike.geodb;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
 	CREATE TABLE EvemtForwardingTargets
 	    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
@@ -30,6 +33,13 @@ public class EventForwardingTargetRecord extends AbstractRecord
 		mInstallationID = Long.parseLong(a[2]);
 	}
 	
+	public EventForwardingTargetRecord(ResultSet rs) throws SQLException 
+	{
+		mID = rs.getLong(1);
+		mEvenForwardingID = rs.getLong(2);
+		mInstallationID = rs.getLong(3);
+	}
+
 	public String toString() 
 	{
 		return String.format("%s%d%s%d%s%d%s",

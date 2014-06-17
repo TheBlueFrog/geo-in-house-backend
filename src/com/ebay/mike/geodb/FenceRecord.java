@@ -51,6 +51,7 @@ public class FenceRecord extends AbstractRecord
 		mEvents = Integer.parseInt(a[7]);
 		mURI = a[8];
 	}
+	
 	public FenceRecord(Connection db, 
 			String installationGuid, 
 			String displayName, 
