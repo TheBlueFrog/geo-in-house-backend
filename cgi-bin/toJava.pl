@@ -23,7 +23,11 @@
   # take the parameters we have, pass along to Java except that the
   # one named "OpCode" is the name of the class to call
     
-  $cmd = "java -cp /var/www/cgi-bin/bin com.ebay.mike.";
+  # the Apache process has no access to most environment vars,
+  # so we do it by hand, pretty fragile...
+  $javalibs = `ls /var/www/cgi-bin/lib/*.jar | tr "\n" " " | tr " " ":"`;
+
+  $cmd = "java -cp $javalibs:/var/www/cgi-bin/bin com.ebay.mike.";
   $params = "";
   
   @pairs = split(/&/, $buffer);
@@ -39,7 +43,7 @@
     }
     else
     {
-      $params = "$params $name $value";
+      $params = "$params $name \"$value\"";
     }
   }
 

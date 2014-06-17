@@ -10,7 +10,11 @@ on local machine to ftp
 sftp -i ~/Downloads/pairtwo.pem root@10.64.186.4
 
 
-curl --header "HTTP_X_GUID:%20lkslks" http://66.211.190.18/a.pl
+
+#on local box to test in-cloud Ping code 
+#
+curl -d "OpCode=Ping&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe8&Domain=frlibtest&Application=FRLIB_TEST_2&IdentityProvider=EbayInc&UserName=mike@fred&EventName=ping&Message=<Data><Key>Title</Key><Value>Some title</Value></Data><Data><Key>Body</Key><Value>And a body</Value></Data>" http://66.211.190.18/cgi-bin/toJava.pl
+
 
 
 root@secondtry-1-51064:/var/www/cgi-bin# java -cp $CLASSPATH:bin com.ebay.mike.Ping 
