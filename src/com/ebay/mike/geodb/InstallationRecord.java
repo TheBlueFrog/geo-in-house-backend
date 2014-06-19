@@ -30,6 +30,14 @@ public class InstallationRecord extends AbstractRecord
 	/** Google Cloud Messaging registration ID */
 	public String mGCMRegistrationID;
 
+	/**
+	 * construct and insert into DB
+	 * 
+	 * @param db
+	 * @param guid
+	 * @param displayName
+	 * @param gcmRegistrationID
+	 */
 	public InstallationRecord(Connection db, String guid, String displayName, String gcmRegistrationID)
 	{
 		mID = -1;
@@ -78,13 +86,17 @@ public class InstallationRecord extends AbstractRecord
 
 	}
 	
-	
-	public InstallationRecord(Connection db, Long i) 
+	/** extract from DB at given record 
+	 * 
+	 * @param db
+	 * @param id
+	 */
+	public InstallationRecord(Connection db, Long id) 
 	{
 		PreparedStatement s = null;
 		try
 		{
-			String q = String.format("select * from Installations where (_id = %d) order by _id DESC limit 1", i);                				
+			String q = String.format("select * from Installations where (_id = %d) order by _id DESC limit 1", id);                				
 			s = db.prepareStatement(q);
 			ResultSet rs = s.executeQuery();
 			if (rs.next())
@@ -93,9 +105,12 @@ public class InstallationRecord extends AbstractRecord
 				mGuid = rs.getString(2);
 				mDisplayName = rs.getString(3);
 				mGCMRegistrationID = rs.getString(4);
+				
+				// fish out the other pieces
+				// 
 			}
 			else
-				throw new IllegalStateException("Failed to get record with row ID " + i);
+				throw new IllegalStateException("Failed to get record with row ID " + id);
 		}
 		catch (SQLException e)
 		{
@@ -115,6 +130,10 @@ public class InstallationRecord extends AbstractRecord
 		}
 	}
 
+	/** construct from string?
+	 * 
+	 * @param s
+	 */
 	public InstallationRecord(String s)
 	{
 		int start = s.indexOf(START_SYMBOL);
