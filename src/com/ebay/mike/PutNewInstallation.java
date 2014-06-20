@@ -44,7 +44,7 @@ public class PutNewInstallation
 
 		    try
 		    {
-		      db = DriverManager.getConnection("jdbc:sqlite:fencenotification.db");
+		      db = DriverManager.getConnection("jdbc:sqlite:/data/fencenotification.db");
 
 		      InstallationRecord r = new InstallationRecord(db, 
 		    		  params.get("InstallationGUID"), 

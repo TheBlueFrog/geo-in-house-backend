@@ -8,6 +8,8 @@ unzip src.zip
 rm -Rf __MACOSX
 
 mkdir bin
-javac -d bin src/com/ebay/mike/SendMessage.java 
+javac -sourcepath src -classpath bin:$MYLIBS src/com/ebay/mike/SendMessage.java -d bin
+javac -sourcepath src -classpath bin:$MYLIBS src/com/ebay/mike/PutNewInstallation.java -d bin
+ 
 
 

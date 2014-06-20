@@ -65,7 +65,7 @@ public class InstallationRecord extends AbstractRecord
 			if (rs.next())
 				mID = rs.getLong(1);
 			else
-				throw new IllegalStateException("Failed to insert and recover _id");
+				throw new SQLException("Failed to insert and recover _id");
 		}
 		catch (SQLException e)
 		{

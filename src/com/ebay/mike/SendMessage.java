@@ -61,8 +61,6 @@ public class SendMessage
 			+ "</MessagePayload>"
 			;
 	
-	
-	
 	public static void main(String[] args)
 	{
 		// recover params to a map
