@@ -1,17 +1,11 @@
 package com.ebay.mike;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.ebay.mike.geodb.InstallationRecord;
 
 /**
  * add a new fence
  */
-public class PutNewInstallation
+public class PutNewInstallation extends DBInterface
 {
 	/**
 	 * app does a POST to http://66.211.190.18/cgi-bin/toJava.pl
@@ -26,59 +20,25 @@ public class PutNewInstallation
 		params.put("GCMRegistrationID", gcmRegistrationID);
 	 */
 	
-	public static void main(String[] args)
+	public PutNewInstallation(String[] args) 
 	{
-		Map<String, String> params = new HashMap<String, String>();
-		
-		for (int i = 0; i < args.length; i += 2)
-		{
-			params.put(args[i], args[i+1]);
-			System.out.println(String.format("%s = %s", args[i], args[i+1]));
-		}
-
-	    try
-	    {
-			Class.forName("org.sqlite.JDBC");
-
-		    Connection db = null;
-
-		    try
-		    {
-		      db = DriverManager.getConnection("jdbc:sqlite:/data/fencenotification.db");
-
-		      InstallationRecord r = new InstallationRecord(db, 
-		    		  params.get("InstallationGUID"), 
-		    		  params.get("DisplayName"), 
-		    		  params.get("GCMRegistrationID"));
-		      
-		      System.out.println(r.toString());
-		    }
-		    catch(SQLException e)
-		    {
-		      System.err.println(e.getMessage());
-		    }
-		    finally
-		    {
-		      try
-		      {
-		        if(db != null)
-		          db.close();
-		      }
-		      catch(SQLException e)
-		      {
-		        System.out.println(e);
-		      }
-		    }
-		}
-	    catch (ClassNotFoundException e1) 
-		{
-			e1.printStackTrace(System.out);
-		}
+		super(args);
 	}
 
-	static private void Log(String s)
+	public static void main(String[] args)
 	{
-		System.out.println(s);		
+		PutNewInstallation x = new PutNewInstallation(args);
+		x.process();
+	}
+	
+	public String innerProcess()
+	{
+	      InstallationRecord r = new InstallationRecord(mDB, 
+	    		  mParams.get("InstallationGUID"), 
+	    		  mParams.get("DisplayName"), 
+	    		  mParams.get("GCMRegistrationID"));
+	      
+	      return r.toString();
 	}
 	
 }
