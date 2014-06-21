@@ -1,9 +1,12 @@
 package com.ebay.mike;
 
+import java.sql.SQLException;
+
+import com.ebay.mike.geodb.DB;
 import com.ebay.mike.geodb.InstallationRecord;
 
 /**
- * add a new fence
+ * add a new installation to the DB
  */
 public class PutNewInstallation extends DBInterface
 {
@@ -31,14 +34,22 @@ public class PutNewInstallation extends DBInterface
 		x.process();
 	}
 	
-	public String innerProcess()
+	public String innerProcess() throws SQLException
 	{
-	      InstallationRecord r = new InstallationRecord(mDB, 
-	    		  mParams.get("InstallationGUID"), 
-	    		  mParams.get("DisplayName"), 
-	    		  mParams.get("GCMRegistrationID"));
-	      
-	      return r.toString();
+		long id = DB.getGuidID(mDB, mParams.get("InstallationGUID"));
+		if (id == -1)
+		{
+			InstallationRecord r = new InstallationRecord(mDB, 
+					mParams.get("InstallationGUID"), 
+					mParams.get("DisplayName"),
+					mParams.get("GCMRegistrationID"));
+	
+			return r.toString();
+		}
+		else
+		{
+			return "Error, InstallationGUID exists " + mParams.get("InstallationGUID");
+		}
 	}
 	
 }
