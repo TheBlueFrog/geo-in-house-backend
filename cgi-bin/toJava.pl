@@ -1,18 +1,23 @@
 #!/usr/bin/perl
-	
+
+  # logging philo, if all is cool the executed Java code will return
+  # a string, that is what we return, unadorned.
+  #
+  # otherwise we return an HTML formatted error, this is probably wrong
+  	
   my($local_files) = '/var/www/data';
 
   local ($buffer, @pairs, $pair, $name, $value, $cmd, $params);
-  
-  print "Content-type:text/html\r\n\r\n";
-  print "<html>";
-  print "<head>";
   
   $ENV{'REQUEST_METHOD'} =~ tr/a-z/A-Z/;
   if ($ENV{'REQUEST_METHOD'} ne "POST")
   {
     $buffer = $ENV{'QUERY_STRING'};
-    print "<title>Received GET, not supported</title>";
+
+  	print "Content-type:text/html\r\n\r\n";
+  	print "<html>";
+	print "<head>";
+    print "<title>Error - GET not supported</title>";
     print "</head><body></body></html>";
     die;
   }
@@ -27,7 +32,7 @@
   # so we do it by hand, pretty fragile...
   $javalibs = `ls /var/www/cgi-bin/lib/*.jar | tr "\n" " " | tr " " ":"`;
 
-  $cmd = "java -cp $javalibs:/var/www/cgi-bin/bin com.ebay.mike.";
+  $opcode = "";
   $params = "";
   
   @pairs = split(/&/, $buffer);
@@ -39,7 +44,7 @@
 
     if ($name eq "OpCode")
     {
-      $cmd = "$cmd$value";
+      $opcode = "$value";
     }
     else
     {
@@ -47,17 +52,32 @@
     }
   }
 
-
-  # now pass to Java, output the response
+  if ($opcode eq "")
+  {
+    # oops no opcode
   
-  print "<br>";
-  print "execute $cmd $params";
-  print "<br>";
-  print `$cmd $params`;
-  print "<br>";
+  	print "Content-type:text/html\r\n\r\n";
+  	print "<html>";
+	print "<head>";
+    print "<title>Error - no OpCode</title>";
+    print "</head><body></body></html>";
+  }
+  else
+  {
+    # now pass to Java, output the response
   
-  print "</body>";
-  print "</html>";
+    $cmd = "java -cp $javalibs:/var/www/cgi-bin/bin com.ebay.mike.$opcode";
 
+#  	print "Content-type:text/html\r\n\r\n";
+#  	print "<html>";
+#	print "<head>";
+#    print "<title>OpCode $opcode</title>";
+#    print "</head><body>$cmd $params</body></html>";
+    
+  	print "Content-type:text\r\n\r\n";
+    $response = `$cmd $params`;
+    print "$response";
+  }
+  
 1;
 

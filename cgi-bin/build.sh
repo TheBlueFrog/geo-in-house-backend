@@ -9,6 +9,7 @@ rm -Rf __MACOSX
 
 mkdir bin
 javac -sourcepath src -classpath bin:$MYLIBS src/com/ebay/mike/SendMessage.java -d bin
+javac -sourcepath src -classpath bin:$MYLIBS src/com/ebay/mike/GetInstallations.java -d bin
 javac -sourcepath src -classpath bin:$MYLIBS src/com/ebay/mike/PutNewInstallation.java -d bin
  
 
