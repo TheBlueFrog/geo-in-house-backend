@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.ebay.mike.abstractdb.AbstractEventForwardingTargetRecord;
+
+
+
 public class DB
 {
 	// these column indexes are 1-based, unlike Android's SQLite implementation 
@@ -215,14 +219,14 @@ public class DB
 		}
 	}
 
-	public static List<EventForwardingTargetRecord> getEventForwardingTargets(
+	public static List<AbstractEventForwardingTargetRecord> getEventForwardingTargets(
 			Connection db, long fenceID) throws SQLException 
 	{
 		PreparedStatement s = null;
 		
 		try 
 		{
-			List<EventForwardingTargetRecord> v = new ArrayList<EventForwardingTargetRecord>();
+			List<AbstractEventForwardingTargetRecord> v = new ArrayList<AbstractEventForwardingTargetRecord>();
 			String q = String.format("select * from EventForwardingTargets where (FenceID = %d)", fenceID);
 			s = db.prepareStatement(q);
 			ResultSet rs = s.executeQuery();

@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ebay.mike.abstractdb.AbstractEventForwardingRecord;
+import com.ebay.mike.abstractdb.AbstractEventForwardingTargetRecord;
+
 /**
 	CREATE TABLE EventForwardings
 	    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
@@ -13,30 +16,19 @@ import java.util.List;
 	    IncomingEventType INTEGER);
  
  */
-public class EventForwardingRecord extends AbstractRecord
+public class EventForwardingRecord extends AbstractEventForwardingRecord
 {
-	public long mID;
-	public long mFenceID;
-	public long mInstallationID;
-	public int mIncomingEventType;
-	private List<EventForwardingTargetRecord> mTargets;
-	private Connection mDB;
-	
-		
+	protected Connection mDB;
+
 	public EventForwardingRecord(String s)
 	{
-		int start = s.indexOf(START_SYMBOL);
-		int end = s.indexOf(END_SYMBOL);
-		String[] a = s.substring(start+1, end).split(FIELD_SEPARATOR);
-		
-		mID = Long.parseLong(a[0]);
-		mFenceID = Long.parseLong(a[1]);
-		mInstallationID = Long.parseLong(a[2]);
-		mIncomingEventType = Integer.parseInt(a[3]);
+		super(s);
 	}
 	
 	public EventForwardingRecord(Connection db, ResultSet rs) throws SQLException 
 	{
+		super();
+		
 		mDB = db;
 		
 		mID = rs.getLong(1);
@@ -76,9 +68,9 @@ public class EventForwardingRecord extends AbstractRecord
 				END_SYMBOL);
 	}
 
-	public List<EventForwardingTargetRecord> getForwardingTargets (Connection db) throws SQLException
+	public List<AbstractEventForwardingTargetRecord> getForwardingTargets (Connection db) throws SQLException
 	{
-		List<EventForwardingTargetRecord> v = DB.getEventForwardingTargets(db, mFenceID);
+		List<AbstractEventForwardingTargetRecord> v = DB.getEventForwardingTargets(db, mFenceID);
 		return v;
 	}
 }
