@@ -14,7 +14,7 @@
   {
     $buffer = $ENV{'QUERY_STRING'};
 
-  	print "Content-type:text/html\r\n\r\n";
+  	print "Content-Type:text/html\r\n\r\n";
   	print "<html>";
 	print "<head>";
     print "<title>Error - GET not supported</title>";
@@ -23,7 +23,7 @@
   }
 
   read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
-  print "<title>Received POST</title>";
+#  print "<title>Received POST</title>";
 
   # take the parameters we have, pass along to Java except that the
   # one named "OpCode" is the name of the class to call
@@ -56,7 +56,7 @@
   {
     # oops no opcode
   
-  	print "Content-type:text/html\r\n\r\n";
+  	print "Content-Type:text/html\r\n\r\n";
   	print "<html>";
 	print "<head>";
     print "<title>Error - no OpCode</title>";
@@ -68,13 +68,13 @@
   
     $cmd = "java -cp $javalibs:/var/www/cgi-bin/bin com.ebay.mike.$opcode";
 
-#  	print "Content-type:text/html\r\n\r\n";
+#  	print "Content-Type:text/html\r\n\r\n";
 #  	print "<html>";
 #	print "<head>";
 #    print "<title>OpCode $opcode</title>";
 #    print "</head><body>$cmd $params</body></html>";
     
-  	print "Content-type:text\r\n\r\n";
+  	print "Content-Type:text\r\n\r\n";
     $response = `$cmd $params`;
     print "$response";
   }

@@ -70,7 +70,7 @@ public class SendMessage
 		for (int i = 0; i < args.length; i += 2)
 		{
 			params.put(args[i], args[i+1]);
-			System.out.println(String.format("%s = %s", args[i], args[i+1]));
+//			System.out.println(String.format("%s = %s", args[i], args[i+1]));
 		}
 
 		// extract params
@@ -111,7 +111,8 @@ public class SendMessage
             				}
             				else
             				{
-            					throw new ClientProtocolException("Unexpected response status: " + status);
+            					return "Error - unexpected server status " + status;
+//            					throw new ClientProtocolException("Unexpected response status: " + status);
             				}
             			}
             		};
@@ -125,15 +126,15 @@ public class SendMessage
 	            httpclient.close();
 	        }
 	        
-			System.out.println("hello");
+//			System.out.println("hello");
 		}
 		catch (UnsupportedEncodingException e)
 		{
-			Log("UnsupportedEncodingException " + e.getMessage());
+			Log("Error - UnsupportedEncodingException " + e.getMessage());
 		}
 		catch (IOException e)
 		{
-			Log("IOException " + e.getMessage());
+			Log("Error - IOException " + e.getMessage());
 		}
 	}
 
@@ -196,7 +197,7 @@ public class SendMessage
 		  .append("</SendMessageRequest>")
 		  ;
 		
-		Log(sb.toString());
+//		Log(sb.toString());
 		
 		StringEntity xmlEntity = new StringEntity(sb.toString(), "UTF-8");
 		r.setEntity(xmlEntity );
