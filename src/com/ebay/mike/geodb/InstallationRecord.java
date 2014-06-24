@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ebay.mike.abstractdb.AbstractInstallationRecord;
+
 /**
 	class to wrap SQLite3 table row
 	
@@ -17,19 +19,8 @@ import java.util.List;
 		 GCMRegistrationID TEXT);
 		 
  */
-public class InstallationRecord extends AbstractRecord 
+public class InstallationRecord extends AbstractInstallationRecord 
 {
-	/** record id */
-	public long mID;
-
-	/** GUID of the device installation represent */
-	public String mGuid;
-	
-	public String mDisplayName;
-	
-	/** Google Cloud Messaging registration ID */
-	public String mGCMRegistrationID;
-
 	/**
 	 * construct and insert into DB
 	 * 
@@ -40,6 +31,8 @@ public class InstallationRecord extends AbstractRecord
 	 */
 	public InstallationRecord(Connection db, String guid, String displayName, String gcmRegistrationID)
 	{
+		super();
+		
 		mID = -1;
 		mGuid = guid;
 		mDisplayName = displayName;
@@ -93,6 +86,8 @@ public class InstallationRecord extends AbstractRecord
 	 */
 	public InstallationRecord(Connection db, Long id) 
 	{
+		super();
+		
 		PreparedStatement s = null;
 		try
 		{
@@ -130,33 +125,4 @@ public class InstallationRecord extends AbstractRecord
 		}
 	}
 
-	/** construct from string?
-	 * 
-	 * @param s
-	 */
-	public InstallationRecord(String s)
-	{
-		int start = s.indexOf(START_SYMBOL);
-		int end = s.indexOf(END_SYMBOL);
-		String[] a = s.substring(start+1, end).split(FIELD_SEPARATOR);
-		
-		mID = Long.parseLong(a[0]);
-		mGuid = a[1];
-		mDisplayName = a[2];
-		mGCMRegistrationID = a[3];
-	}
-	
-	public String toString() 
-	{
-		return String.format("%s%d%s%s%s%s%s%s%s",
-				START_SYMBOL,
-				mID,
-				FIELD_SEPARATOR,
-				mGuid,
-				FIELD_SEPARATOR,
-				mDisplayName, 
-				FIELD_SEPARATOR,
-				mGCMRegistrationID,
-				END_SYMBOL);
-	}
 }

@@ -1,4 +1,5 @@
-package com.ebay.mike.geodb;
+package com.ebay.mike.abstractdb;
+
 
 public class AbstractRecord {
 

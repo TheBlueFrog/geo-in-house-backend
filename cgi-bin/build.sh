@@ -14,3 +14,4 @@ javac -sourcepath src -classpath bin:$MYLIBS src/com/ebay/mike/PutNewInstallatio
  
 
 
+-sourcepath src:abstractdb
