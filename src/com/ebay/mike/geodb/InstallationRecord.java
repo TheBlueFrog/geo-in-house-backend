@@ -103,6 +103,7 @@ public class InstallationRecord extends AbstractInstallationRecord
 				
 				// fish out the other pieces
 				// 
+				mFences = FenceRecord.getFencesForInstallation(db,mID);
 			}
 			else
 				throw new IllegalStateException("Failed to get record with row ID " + id);
@@ -123,6 +124,11 @@ public class InstallationRecord extends AbstractInstallationRecord
 					e.printStackTrace(System.out);
 				}
 		}
+	}
+
+	public void addFence(FenceRecord r) 
+	{
+		mFences.add(r);
 	}
 
 }

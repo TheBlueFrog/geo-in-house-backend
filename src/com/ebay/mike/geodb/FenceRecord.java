@@ -26,9 +26,43 @@ CREATE TABLE Fences
 */
 public class FenceRecord extends AbstractFenceRecord
 {
-	
+	/**
+	 * insert a new FenceRecord into the db
+	 * 
+	 * @param db
+	 * @param installationGuid
+	 * @param displayName
+	 * @param latitude
+	 * @param longitude
+	 * @param radius
+	 * @param events
+	 * @param uri
+	 * @throws SQLException
+	 */
 	public FenceRecord(Connection db, 
 			String installationGuid, 
+			String displayName, 
+			double latitude, double longitude, double radius,
+			int events, 
+			String uri) throws SQLException
+	{
+		this(db, DB.getGuidID(db, installationGuid), displayName, latitude, longitude, radius, events, uri);
+	}
+	/**
+	 * insert a new FenceRecord into the db
+	 * 
+	 * @param db
+	 * @param installationID
+	 * @param displayName
+	 * @param latitude
+	 * @param longitude
+	 * @param radius
+	 * @param events
+	 * @param uri
+	 * @throws SQLException
+	 */
+	public FenceRecord(Connection db, 
+			long installationID, 
 			String displayName, 
 			double latitude, double longitude, double radius,
 			int events, 
@@ -40,7 +74,7 @@ public class FenceRecord extends AbstractFenceRecord
 		try
 		{
 			mID = -1;
-			mInstallationID = DB.getGuidID(db, installationGuid);
+			mInstallationID = installationID;
 			mGuid = UUID.randomUUID().toString();
 			mDisplayName = displayName;
 			mLatitude = latitude;
@@ -100,6 +134,30 @@ public class FenceRecord extends AbstractFenceRecord
 		mRadius = rs.getDouble(7);
 		mEvents = rs.getInt(8);
 		mURI = rs.getString(9);
+	}
+
+	public static List<AbstractFenceRecord> getFencesForInstallation(Connection db, long installID) throws SQLException
+	{
+		PreparedStatement s = null;
+		
+		try 
+		{
+			List<AbstractFenceRecord> v = new ArrayList<AbstractFenceRecord>();
+			String q = String.format("select * from Fences where (InstallationID = %d)", installID);
+			s = db.prepareStatement(q);
+			ResultSet rs = s.executeQuery();
+			while (rs.next())
+			{
+				v.add(new FenceRecord(rs));
+			}
+			return v;
+			
+		} 
+		finally
+		{
+			if (s != null)
+				s.close();
+		}
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ebay.mike.geodb.DB;
+import com.ebay.mike.geodb.FenceRecord;
 import com.ebay.mike.geodb.InstallationRecord;
 
 /**
@@ -38,6 +39,9 @@ public class GetInstallations extends DBInterface
 		for (Long i : v) 
 		{
 			InstallationRecord r = new InstallationRecord(mDB, i);
+			
+			r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
+			
 			sb.append(r.toString());
 			sb.append("\n");
 		}

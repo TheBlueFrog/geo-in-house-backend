@@ -1,5 +1,7 @@
 package com.ebay.mike.abstractdb;
 
+import java.util.List;
+
 
 /**
 	class to wrap table row
@@ -16,6 +18,10 @@ public class AbstractInstallationRecord extends AbstractRecord
 	
 	/** Google Cloud Messaging registration ID */
 	public String mGCMRegistrationID;
+
+	/** Fences of this installation */
+	public List<AbstractFenceRecord> mFences;
+
 
 	protected AbstractInstallationRecord()
 	{
@@ -39,6 +45,10 @@ public class AbstractInstallationRecord extends AbstractRecord
 	
 	public String toString() 
 	{
+		StringBuilder fences = new StringBuilder();
+		for (AbstractFenceRecord f : mFences)
+			fences.append(f.toString());
+		
 		return String.format("%s%d%s%s%s%s%s%s%s",
 				START_SYMBOL,
 				mID,
@@ -48,6 +58,8 @@ public class AbstractInstallationRecord extends AbstractRecord
 				mDisplayName, 
 				FIELD_SEPARATOR,
 				mGCMRegistrationID,
+				FIELD_SEPARATOR,
+				fences.toString(),
 				END_SYMBOL);
 	}
 }
