@@ -79,6 +79,11 @@ public class InstallationRecord extends AbstractInstallationRecord
 
 	}
 	
+	public InstallationRecord (String s)
+	{
+		super (s);
+	}
+	
 	/** extract from DB at given record 
 	 * 
 	 * @param db
