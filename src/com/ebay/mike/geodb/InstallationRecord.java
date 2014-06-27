@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.ebay.mike.abstractdb.AbstractInstallationRecord;
 
 /**
@@ -79,6 +81,11 @@ public class InstallationRecord extends AbstractInstallationRecord
 
 	}
 	
+	public InstallationRecord(JSONObject jsonObject)
+	{
+		super (jsonObject);
+	}
+
 	public InstallationRecord (String s)
 	{
 		super (s);

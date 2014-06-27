@@ -1,6 +1,6 @@
 package com.ebay.mike.abstractdb;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 
 public class AbstractFenceRecord extends AbstractRecord 
@@ -21,62 +21,41 @@ public class AbstractFenceRecord extends AbstractRecord
 
 	public AbstractFenceRecord(String s) 
 	{
-		int start = s.indexOf(START_SYMBOL);
-		int end = s.indexOf(END_SYMBOL);
-		String[] a = s.substring(start + 1, end).split("[" + FIELD_SEPARATOR + "]");
+	}
 
-		mID = Long.parseLong(a[0]);
-		mInstallationID = Long.parseLong(a[1]);
-		mGuid = a[2];
-		mDisplayName = a[3];
-		mLatitude = Double.parseDouble(a[4]);
-		mLongitude = Double.parseDouble(a[5]);
-		mRadius = Double.parseDouble(a[6]);
-		mEvents = Integer.parseInt(a[7]);
-		mURI = a[8];
+	public AbstractFenceRecord(JSONObject j)
+	{
+		mID = j.getLong("id");
+		mInstallationID = j.getLong("InstallationID");
+		mGuid = j.getString("Guid");
+		mDisplayName = j.getString("DisplayName");
+		mLatitude = j.getDouble("Latitude");
+		mLongitude = j.getDouble("Longitude");
+		mRadius = j.getDouble("Radius");
+		mEvents = j.getInt("Events");
+		mURI = j.getString("URI");
 	}
 
 	public JSONObject toJSON() 
 	{
-		String jsonText;
-		{
-			JSONObject j = new JSONObject();
-			j.put("id", mID);
-			j.put("InstallationID", mInstallationID);
-			j.put("Guid", mGuid);
-			j.put("Latitude", mLatitude);
-			j.put("Longitude", mLongitude);
-			j.put("Radius", mRadius);
-			j.put("Events", mEvents);
-			j.put("URI", mURI);
-			
-			jsonText = j.toString();
-			return j;
-		}
+		JSONObject j = new JSONObject();
+		j.put("id", mID);
+		j.put("InstallationID", mInstallationID);
+		j.put("Guid", mGuid);
+		j.put("DisplayName", mDisplayName);
+		j.put("Latitude", mLatitude);
+		j.put("Longitude", mLongitude);
+		j.put("Radius", mRadius);
+		j.put("Events", mEvents);
+		j.put("URI", mURI);
+		
+		String jsonText = j.toString();
+		return j;
 	}
 	
 	public String toString() 
 	{
-		return String.format("%s%d%s%d%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
-				START_SYMBOL,
-				mID,
-				FIELD_SEPARATOR,
-				mInstallationID,
-				FIELD_SEPARATOR,
-				mGuid, 
-				FIELD_SEPARATOR,
-				mDisplayName,
-				FIELD_SEPARATOR,
-				mLatitude,
-				FIELD_SEPARATOR,
-				mLongitude,
-				FIELD_SEPARATOR,
-				mRadius,
-				FIELD_SEPARATOR,
-				mEvents,
-				FIELD_SEPARATOR,
-				mURI,
-				END_SYMBOL);
+		return toJSON().toString();
 	}
 
 }
