@@ -1,12 +1,14 @@
 package com.ebay.mike.abstractdb;
 
+import org.json.JSONObject;
+
 
 public class AbstractEventForwardingTargetRecord extends AbstractRecord 
 {
 	public long mID;
 	
 	/** record ID of EventForwardingRecord we belong to */
-	public long mEvenForwardingID;
+	public long mEventForwardingID;
 
 	/** installation to forward event to */
 	public long mInstallationID;
@@ -15,27 +17,26 @@ public class AbstractEventForwardingTargetRecord extends AbstractRecord
 	{
 	}
 	
-	public AbstractEventForwardingTargetRecord(String s)
-	{
-		int start = s.indexOf(START_SYMBOL);
-		int end = s.indexOf(END_SYMBOL);
-		String[] a = s.substring(start+1, end).split("[" + FIELD_SEPARATOR + "]");
-		
-		mID = Long.parseLong(a[0]);
-		mEvenForwardingID = Long.parseLong(a[1]);
-		mInstallationID = Long.parseLong(a[2]);
-	}
-	
+	@Override
 	public String toString() 
 	{
-		return String.format("%s%d%s%d%s%d%s",
-				START_SYMBOL,
-				mID,
-				FIELD_SEPARATOR,
-				mEvenForwardingID,
-				FIELD_SEPARATOR,
-				mInstallationID,
-				END_SYMBOL);
+		return toJSON().toString();
 	}
-
+	
+	public AbstractEventForwardingTargetRecord(JSONObject j)
+	{
+		mID = j.getLong("id");
+		mEventForwardingID = j.getLong("EventForwardingID");
+		mInstallationID = j.getLong("InstallationID");
+	}
+	public JSONObject toJSON() 
+	{
+		JSONObject j = new JSONObject();
+		j.put("id", mID);
+		j.put("EventForwardingID", mEventForwardingID);
+		j.put("InstallationID", mInstallationID);
+		
+		String jsonText = j.toString();
+		return j;
+	}
 }

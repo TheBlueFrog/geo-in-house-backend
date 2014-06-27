@@ -3,26 +3,19 @@ package com.ebay.mike;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
-public abstract class DBInterface {
-
+public abstract class DBInterface extends BasicInterface
+{
 	private static final String TAG = DBInterface.class.getSimpleName();
 
 	protected static String mDBPath = "/data/fencenotification.db";
 
 	
-	protected Map<String, String> mParams = new HashMap<String, String>();
-    protected Connection mDB = null;
+	protected Connection mDB = null;
 
 	public DBInterface(String[] args) 
 	{
-		for (int i = 0; i < args.length; i += 2)
-		{
-			mParams.put(args[i], args[i+1]);
-			Log(String.format("%s = %s", args[i], args[i+1]));
-		}
+		super (args);
 	}
 
 	protected void process()
@@ -62,9 +55,5 @@ public abstract class DBInterface {
 		}
 	}
 	
-	protected void Log(String s) {
-		System.out.println(s);		
-	}
-
 	abstract String innerProcess () throws SQLException;
 }

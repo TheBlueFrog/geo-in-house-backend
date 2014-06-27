@@ -32,13 +32,11 @@ public class AbstractInstallationRecord extends AbstractRecord
 	protected AbstractInstallationRecord()
 	{
 	}
-	
-	/** construct from string
-	 * 
-	 * @param s
-	 */
-	public AbstractInstallationRecord(String s)
+
+	@Override
+	public String toString()
 	{
+		return toJSON().toString();
 	}
 	
 	public AbstractInstallationRecord(JSONObject j)
@@ -52,7 +50,6 @@ public class AbstractInstallationRecord extends AbstractRecord
 		for (int i = 0; i < a.length(); ++i)
 			mFences.add(new AbstractFenceRecord((JSONObject) a.get(i)));
 	}
-
 	public JSONObject toJSON() 
 	{
 		JSONObject j = new JSONObject();
@@ -71,9 +68,4 @@ public class AbstractInstallationRecord extends AbstractRecord
 		return j;
 	}
 	
-	@Override
-	public String toString()
-	{
-		return toJSON().toString();
-	}
 }

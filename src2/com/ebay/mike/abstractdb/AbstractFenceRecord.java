@@ -19,8 +19,10 @@ public class AbstractFenceRecord extends AbstractRecord
 	{
 	}
 
-	public AbstractFenceRecord(String s) 
+	@Override
+	public String toString() 
 	{
+		return toJSON().toString();
 	}
 
 	public AbstractFenceRecord(JSONObject j)
@@ -52,10 +54,4 @@ public class AbstractFenceRecord extends AbstractRecord
 		String jsonText = j.toString();
 		return j;
 	}
-	
-	public String toString() 
-	{
-		return toJSON().toString();
-	}
-
 }

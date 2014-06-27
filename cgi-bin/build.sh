@@ -16,4 +16,5 @@ mkdir bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/SendMessage.java -d bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/GetInstallations.java -d bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/PutNewInstallation.java -d bin
+javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/UploadData.java -d bin
 

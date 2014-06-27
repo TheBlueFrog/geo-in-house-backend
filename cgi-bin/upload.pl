@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 	
-  my($local_files) = '/var/www/data';
+  my($local_files) = '/data';
 
   local ($buffer, @pairs, $pair, $name, $value, %FORM);
   

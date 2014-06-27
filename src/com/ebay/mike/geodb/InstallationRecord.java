@@ -85,11 +85,6 @@ public class InstallationRecord extends AbstractInstallationRecord
 	{
 		super (jsonObject);
 	}
-
-	public InstallationRecord (String s)
-	{
-		super (s);
-	}
 	
 	/** extract from DB at given record 
 	 * 

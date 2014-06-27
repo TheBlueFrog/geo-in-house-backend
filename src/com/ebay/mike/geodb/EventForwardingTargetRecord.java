@@ -18,7 +18,7 @@ public class EventForwardingTargetRecord extends AbstractEventForwardingTargetRe
 	public EventForwardingTargetRecord(ResultSet rs) throws SQLException 
 	{
 		mID = rs.getLong(1);
-		mEvenForwardingID = rs.getLong(2);
+		mEventForwardingID = rs.getLong(2);
 		mInstallationID = rs.getLong(3);
 	}
 }
