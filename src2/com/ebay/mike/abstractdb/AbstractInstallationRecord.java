@@ -3,6 +3,7 @@ package com.ebay.mike.abstractdb;
 import java.util.List;
 
 
+
 /**
 	class to wrap table row
  */
@@ -49,7 +50,7 @@ public class AbstractInstallationRecord extends AbstractRecord
 		for (AbstractFenceRecord f : mFences)
 			fences.append(f.toString());
 		
-		return String.format("%s%d%s%s%s%s%s%s%s",
+		return String.format("%s%d%s%s%s%s%s%s%s%s%s",
 				START_SYMBOL,
 				mID,
 				FIELD_SEPARATOR,
