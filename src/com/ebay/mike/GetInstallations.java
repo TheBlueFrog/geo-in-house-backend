@@ -1,7 +1,12 @@
 package com.ebay.mike;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONValue;
 
 import org.json.simple.JSONArray;
 
@@ -25,6 +30,7 @@ public class GetInstallations extends DBInterface
 	public GetInstallations(String[] args) 
 	{
 		super(args);
+<<<<<<< HEAD
 	
 //		String jsonText;
 //		{
@@ -56,6 +62,31 @@ public class GetInstallations extends DBInterface
 //			e.printStackTrace();
 //		}
 
+=======
+		
+//		  JSONObject obj=new JSONObject();
+//		  obj.put("name","foo");
+//		  obj.put("num",new Integer(100));
+//		  obj.put("balance",new Double(1000.21));
+//		  obj.put("is_vip",new Boolean(true));
+//		  obj.put("nickname",null);
+//		  String s = obj.toString();
+
+		  
+		  Map obj=new LinkedHashMap();
+		  obj.put("name","foo");
+		  obj.put("num",new Integer(100));
+		  obj.put("balance",new Double(1000.21));
+		  obj.put("is_vip",new Boolean(true));
+		  obj.put("nickname",null);
+		  String jsonText = JSONValue.toJSONString(obj);
+
+		  
+		  Object obj2=JSONValue.parse(jsonText);
+		  JSONArray array=(JSONArray)obj2;
+
+		  array.get(0);
+>>>>>>> 70417c0c7acc174b5926012ddd70924d9dcc4abc
 	}
 
 	public static void main(String[] args)
@@ -83,11 +114,19 @@ public class GetInstallations extends DBInterface
 
 //			r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
 			
+<<<<<<< HEAD
 //			String s = r.toString();
 //			
 //			InstallationRecord rr = new InstallationRecord(s);
 //			sb.append(s);
 //			sb.append("\n");
+=======
+			if (r.mFences.size() == 0)
+				r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
+			
+			sb.append(r.toString());
+			sb.append("\n");
+>>>>>>> 70417c0c7acc174b5926012ddd70924d9dcc4abc
 		}
 
 		return list.toString();

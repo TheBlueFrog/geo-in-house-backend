@@ -8,6 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
+
 /**
 	class to wrap table row
  */
@@ -66,6 +67,7 @@ public class AbstractInstallationRecord extends AbstractRecord
 	public JSONObject toJSON() 
 	{
 		
+<<<<<<< HEAD
 		String jsonText;
 		{
 			JSONObject j = new JSONObject();
@@ -98,5 +100,19 @@ public class AbstractInstallationRecord extends AbstractRecord
 //				FIELD_SEPARATOR,
 //				fences.toString(),
 //				END_SYMBOL);
+=======
+		return String.format("%s%d%s%s%s%s%s%s%s%s%s",
+				START_SYMBOL,
+				mID,
+				FIELD_SEPARATOR,
+				mGuid,
+				FIELD_SEPARATOR,
+				mDisplayName, 
+				FIELD_SEPARATOR,
+				mGCMRegistrationID,
+				FIELD_SEPARATOR,
+				fences.toString(),
+				END_SYMBOL);
+>>>>>>> 70417c0c7acc174b5926012ddd70924d9dcc4abc
 	}
 }
