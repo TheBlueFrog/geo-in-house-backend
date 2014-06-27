@@ -8,8 +8,9 @@ import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 
+import org.json.simple.JSONArray;
+
 import com.ebay.mike.geodb.DB;
-import com.ebay.mike.geodb.FenceRecord;
 import com.ebay.mike.geodb.InstallationRecord;
 
 /**
@@ -29,6 +30,39 @@ public class GetInstallations extends DBInterface
 	public GetInstallations(String[] args) 
 	{
 		super(args);
+<<<<<<< HEAD
+	
+//		String jsonText;
+//		{
+//			JSONObject j = new JSONObject();
+//			j.put("name", "foo");
+//			j.put("num", new Integer(100));
+//			j.put("balance", new Double(1000.21));
+//			j.put("is_vip", new Boolean(true));
+//			j.put("nickname", null);
+//
+//			// StringWriter out = new StringWriter();
+//			// obj.writeJSONString(out);
+//			jsonText = j.toString();
+//		}
+//
+//		System.out.print(jsonText);
+//
+//		JSONParser parser = new JSONParser();
+//
+//		try 
+//		{
+//			JSONObject j = (JSONObject) parser.parse(jsonText);
+//			Long i = (Long) j.get("num");
+//			String name = (String) j.get("name");
+//			Double bal = (Double) j.get("balance");
+//			Log("hi");
+//		}
+//		catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+
+=======
 		
 //		  JSONObject obj=new JSONObject();
 //		  obj.put("name","foo");
@@ -52,6 +86,7 @@ public class GetInstallations extends DBInterface
 		  JSONArray array=(JSONArray)obj2;
 
 		  array.get(0);
+>>>>>>> 70417c0c7acc174b5926012ddd70924d9dcc4abc
 	}
 
 	public static void main(String[] args)
@@ -62,19 +97,38 @@ public class GetInstallations extends DBInterface
 	
 	public String innerProcess() throws SQLException
 	{
+		JSONArray list = new JSONArray();
+//		list.add("msg 1");
+//		list.add("msg 2");
+//		list.add("msg 3");
+//	 
+//		list.toJSONString();
+
 		StringBuilder sb = new StringBuilder();
 		List<Long> v = DB.getAllInstallationIDs(mDB);
 		for (Long i : v) 
 		{
 			InstallationRecord r = new InstallationRecord(mDB, i);
+
+			list.add(r.toJSON());
+
+//			r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
 			
+<<<<<<< HEAD
+//			String s = r.toString();
+//			
+//			InstallationRecord rr = new InstallationRecord(s);
+//			sb.append(s);
+//			sb.append("\n");
+=======
 			if (r.mFences.size() == 0)
 				r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
 			
 			sb.append(r.toString());
 			sb.append("\n");
+>>>>>>> 70417c0c7acc174b5926012ddd70924d9dcc4abc
 		}
 
-		return sb.toString();
+		return list.toString();
 	}
 }

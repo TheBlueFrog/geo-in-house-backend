@@ -2,6 +2,11 @@ package com.ebay.mike.abstractdb;
 
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 
 /**
@@ -34,22 +39,68 @@ public class AbstractInstallationRecord extends AbstractRecord
 	 */
 	public AbstractInstallationRecord(String s)
 	{
-		int start = s.indexOf(START_SYMBOL);
-		int end = s.indexOf(END_SYMBOL);
-		String[] a = s.substring(start+1, end).split("[" + FIELD_SEPARATOR + "]");
+		JSONParser parser = new JSONParser();
+
+		try 
+		{
+			JSONObject j = (JSONObject) parser.parse(s);
+			mID = (Long) j.get("id");
+			mGuid = (String) j.get("Guid");
+			mDisplayName = (String) j.get("DisplayName");
+			mGCMRegistrationID = (String) j.get("GCMRegistrationID");
+		}
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		
-		mID = Long.parseLong(a[0]);
-		mGuid = a[1];
-		mDisplayName = a[2];
-		mGCMRegistrationID = a[3];
+//		int start = s.indexOf(START_SYMBOL);
+//		int end = s.indexOf(END_SYMBOL);
+//		String[] a = s.substring(start+1, end).split("[" + FIELD_SEPARATOR + "]");
+//		
+//		mID = Long.parseLong(a[0]);
+//		mGuid = a[1];
+//		mDisplayName = a[2];
+//		mGCMRegistrationID = a[3];
 	}
 	
-	public String toString() 
+	public JSONObject toJSON() 
 	{
-		StringBuilder fences = new StringBuilder();
-		for (AbstractFenceRecord f : mFences)
-			fences.append(f.toString());
 		
+<<<<<<< HEAD
+		String jsonText;
+		{
+			JSONObject j = new JSONObject();
+			j.put("id", mID);
+			j.put("Guid", mGuid);
+			j.put("DisplayName", mDisplayName);
+			j.put("GCMRegistrationID", mGCMRegistrationID);
+
+			JSONArray fences = new JSONArray();
+			for (AbstractFenceRecord f : mFences)
+				fences.add(f.toJSON());
+			
+			j.put("Fences", fences);
+			
+			// StringWriter out = new StringWriter();
+			// obj.writeJSONString(out);
+			jsonText = j.toString();
+			return j;
+		}
+
+//		return String.format("%s%d%s%s%s%s%s%s%s",
+//				START_SYMBOL,
+//				mID,
+//				FIELD_SEPARATOR,
+//				mGuid,
+//				FIELD_SEPARATOR,
+//				mDisplayName, 
+//				FIELD_SEPARATOR,
+//				mGCMRegistrationID,
+//				FIELD_SEPARATOR,
+//				fences.toString(),
+//				END_SYMBOL);
+=======
 		return String.format("%s%d%s%s%s%s%s%s%s%s%s",
 				START_SYMBOL,
 				mID,
@@ -62,5 +113,6 @@ public class AbstractInstallationRecord extends AbstractRecord
 				FIELD_SEPARATOR,
 				fences.toString(),
 				END_SYMBOL);
+>>>>>>> 70417c0c7acc174b5926012ddd70924d9dcc4abc
 	}
 }

@@ -1,5 +1,7 @@
 package com.ebay.mike.abstractdb;
 
+import org.json.simple.JSONObject;
+
 
 public class AbstractFenceRecord extends AbstractRecord 
 {
@@ -34,6 +36,25 @@ public class AbstractFenceRecord extends AbstractRecord
 		mURI = a[8];
 	}
 
+	public JSONObject toJSON() 
+	{
+		String jsonText;
+		{
+			JSONObject j = new JSONObject();
+			j.put("id", mID);
+			j.put("InstallationID", mInstallationID);
+			j.put("Guid", mGuid);
+			j.put("Latitude", mLatitude);
+			j.put("Longitude", mLongitude);
+			j.put("Radius", mRadius);
+			j.put("Events", mEvents);
+			j.put("URI", mURI);
+			
+			jsonText = j.toString();
+			return j;
+		}
+	}
+	
 	public String toString() 
 	{
 		return String.format("%s%d%s%d%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
