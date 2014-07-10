@@ -38,13 +38,15 @@ public class SendMessage
 	static String mEventName			= "ping";
 	static String mMessage   			= "";
 	
+	static private final String replacementToken = "%%Body%%";
+	
 	
 	static String mPayload 				= 
 			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
 			+ "<MessagePayload>"
 			+   "<AlertText>Notification</AlertText>"       
 			+   "<Level1Data>"
-			+   "--body--"
+			+   replacementToken
 //			+     "<Data>"                                              
 //			+       "<Key>evt</Key>"                                    
 //			+       "<Value>ping</Value>"                               
@@ -175,7 +177,7 @@ public class SendMessage
 	
 	private static void addBody(HttpPost r) throws UnsupportedEncodingException
 	{
-		String body = mPayload.replace("--body--", mMessage);
+		String body = mPayload.replace(replacementToken, mMessage);
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("<SendMessageRequest>")
