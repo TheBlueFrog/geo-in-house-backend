@@ -33,13 +33,14 @@ public class PutNewFence extends DBInterface
 
 	public static void main(String[] args)
 	{
-		GetInstallation x = new GetInstallation(args);
+		PutNewFence x = new PutNewFence(args);
 		x.process();
 	}
 	
 	public String innerProcess() throws SQLException
 	{
 		long id = DB.getGuidID(mDB, mParams.get("InstallationGUID"));
+		id = 13;
 		InstallationRecord install = new InstallationRecord(mDB, id);
 		
 		install.addFence(new FenceRecord(mDB, 

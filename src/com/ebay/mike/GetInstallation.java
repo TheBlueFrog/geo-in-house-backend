@@ -1,7 +1,6 @@
 package com.ebay.mike;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import com.ebay.mike.geodb.DB;
 import com.ebay.mike.geodb.FenceRecord;
@@ -32,17 +31,19 @@ public class GetInstallation extends DBInterface
 	{
 		String installGuid = mParams.get("InstallationGUID");
 		InstallationRecord out = null;
-		
-		List<Long> v = DB.getAllInstallationIDs(mDB);
-		for (Long i : v) 
+
+		long id = DB.getGuidID(mDB, installGuid);
+
+//		List<Long> v = DB.getAllInstallationIDs(mDB);
+//		for (Long id : v) 
 		{
-			InstallationRecord r = new InstallationRecord(mDB, i);
+			InstallationRecord r = new InstallationRecord(mDB, id);
 			if (r.mGuid.equals(installGuid))
 			{
 				out = r;
 	
 				if (r.mFences.size() == 0)
-					r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
+					r.addFence (new FenceRecord(mDB, id, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
 			}
 		}
 

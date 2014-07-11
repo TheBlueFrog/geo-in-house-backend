@@ -70,7 +70,7 @@ public class DB
 			ResultSet rs = s.executeQuery();
 			if (rs.next())
 			{
-				return rs.getLong(0);
+				return rs.getLong(1);
 			}
 			return -1;
 		}

@@ -17,6 +17,13 @@ curl -d "OpCode=Ping&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe8&Domain=frli
 
 curl -d "OpCode=SendMessage&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe8&Application=FRLIB_TEST_2_A&IdentityProvider=EbayInc&UserName=mike@fred&Domain=frlibtest2&EventName=ping&Message=<Data><Key>Title</Key><Value>title</Value><Key>Body</Key><Value>some body</Value></Data>" http://66.211.190.18/cgi-bin/toJava.pl
 
+curl -d "OpCode=PutNewFence&Radius=50.0&Events=3&Latitude=45.544&Longitude=-122.804&DisplayName=some fence name&InstallationGUID=0da243b3-6cb4-47b1-8444-810ce77ce7d9&URI=http://michaeldcollins.com" http://66.211.190.18/cgi-bin/toJava.pl
+
+curl -d "OpCode=GetInstallations" http://66.211.190.18/cgi-bin/toJava.pl
+curl -d "OpCode=GetInstallation&InstallationGUID=0da243b3-6cb4-47b1-8444-810ce77ce7d9" http://66.211.190.18/cgi-bin/toJava.pl
+
+
+
 root@secondtry-1-51064:/var/www/cgi-bin# java -cp $CLASSPATH:bin com.ebay.mike.Ping 
 Content-Type: application/xml
 Authorization: APP null
