@@ -13,14 +13,10 @@ public class PutNewInstallation extends DBInterface
 	/**
 	 * app does a POST to http://66.211.190.18/cgi-bin/toJava.pl
 	 * 
-	 * if OpCode = PutNewInstallation we get here
-	 * we return the toString of the new installation record
-
-	 * args are a map
-	 * 
-	 *  params.put("InstallationGUID", installGuid);
-		params.put("DisplayName", displayName);
-		params.put("GCMRegistrationID", gcmRegistrationID);
+	 * "OpCode"					PutNewInstallation
+	 * "InstallationGUID"		GUID to mark this installation
+	 * "DisplayName"			Display Name
+	 * "GCMRegistrationID" 		GCMRegistrationID
 	 */
 	
 	public PutNewInstallation(String[] args) 
@@ -35,7 +31,7 @@ public class PutNewInstallation extends DBInterface
 	}
 	
 	public String innerProcess() throws SQLException
-	{
+	{		
 		long id = DB.getGuidID(mDB, mParams.get("InstallationGUID"));
 		if (id == -1)
 		{

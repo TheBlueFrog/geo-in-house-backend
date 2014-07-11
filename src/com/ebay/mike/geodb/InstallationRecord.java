@@ -133,6 +133,7 @@ public class InstallationRecord extends AbstractInstallationRecord
 		}
 	}
 
+
 	public void addFence(FenceRecord r) 
 	{
 		mFences.add(r);

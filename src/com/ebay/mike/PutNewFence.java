@@ -1,81 +1,55 @@
 package com.ebay.mike;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.ebay.mike.geodb.DB;
 import com.ebay.mike.geodb.FenceRecord;
+import com.ebay.mike.geodb.InstallationRecord;
 
 /**
  * add a new fence to an installation
  */
-public class PutNewFence
+public class PutNewFence extends DBInterface
 {
 	/**
 	 * app does a POST to http://66.211.190.18/cgi-bin/toJava.pl
 	 * 
-	 * if OpCode = PutNewFence we get here
-	 * we return a new FenceRecord
-
-	 * args
-	 * [0] owning installation GUID
-	 * [1] display name
-	 * [2] latitude 
-	 * [3] longitude
-	 * [4] radius
-	 * [5] events
-	 * [6] URI
+	 * 	"OpCode"			PutNewFence
+	 * 	"InstallationGUID"	owning installation GUID
+	 * 	"DisplayName"		user visible fence name
+	 *  "Latitude"			location
+	 *  "Longitude"
+	 *  "Radius"			in meters
+	 *  "Events"			enter and/or leave
+	 *  "URI"				URL app can use?
+	 *  
+	 *  returns updated InstallationRecord
 	 */
 	
+	public PutNewFence(String[] args) 
+	{
+		super(args);
+	}
+
 	public static void main(String[] args)
 	{
-	    try
-	    {
-			Class.forName("org.sqlite.JDBC");
-
-		    Connection db = null;
-
-		    try
-		    {
-		      db = DriverManager.getConnection("jdbc:sqlite:fencenotification.db");
-
-		      FenceRecord r = new FenceRecord(db, 
-		    		  args[0], 						// installation GUID
-		    		  args[1], 						// displayName
-		    		  Double.parseDouble(args[2]),	// lat
-		    		  Double.parseDouble(args[3]),	// lon
-		    		  Double.parseDouble(args[4]),	// radius
-		    		  Integer.parseInt(args[5]),	// events
-		    		  args[6]);						// URI
-
-		      System.out.println(r.toString());
-		    }
-		    catch(SQLException e)
-		    {
-		      System.err.println(e.getMessage());
-		    }
-		    finally
-		    {
-		      try
-		      {
-		        if(db != null)
-		          db.close();
-		      }
-		      catch(SQLException e)
-		      {
-		        System.out.println(e);
-		      }
-		    }
-		}
-	    catch (ClassNotFoundException e1) 
-		{
-			e1.printStackTrace(System.out);
-		}
-	}
-
-	static private void Log(String s)
-	{
-		System.out.println(s);		
+		GetInstallation x = new GetInstallation(args);
+		x.process();
 	}
 	
+	public String innerProcess() throws SQLException
+	{
+		long id = DB.getGuidID(mDB, mParams.get("InstallationGUID"));
+		InstallationRecord install = new InstallationRecord(mDB, id);
+		
+		install.addFence(new FenceRecord(mDB, 
+				install.mGuid,
+				mParams.get("DisplayName"),
+				Double.parseDouble(mParams.get("Latitude")), 
+				Double.parseDouble(mParams.get("Longitude")), 
+				Double.parseDouble(mParams.get("Radius")),
+				Integer.parseInt(mParams.get("Events")), mParams.get("URI")));
+		
+		return install.toString();
+	}	
 }
