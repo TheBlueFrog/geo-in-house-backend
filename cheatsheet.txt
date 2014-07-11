@@ -24,6 +24,7 @@ Accept: application/xml
 <SendMessageRequest><MsgTier>Tier1</MsgTier><Message><Receiver><Type>User</Type><Provider>null</Provider><Id>null</Id><Domain>null</Domain><Application>null</Application><EventName>null</EventName></Receiver><Data><Payload><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MessagePayload><AlertText>Notification</AlertText><Level1Data><Data><Key>evt</Key><Value>ping</Value></Data><Data><Key>usr</Key><Value>mike@fred</Value></Data><Data><Key>key1</Key><Value>value1</Value></Data></Level1Data></MessagePayload>]]></Payload><FormatRequired>true</FormatRequired></Data></Message></SendMessageRequest>
 IOException Unexpected response status: 401
 
+set MYLIBS "~/Downloads/
 
 CREATE TABLE Installations 
 	(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
