@@ -36,6 +36,7 @@ public class GetInstallation extends DBInterface
 
 //		List<Long> v = DB.getAllInstallationIDs(mDB);
 //		for (Long id : v) 
+		if (id >= 0)
 		{
 			InstallationRecord r = new InstallationRecord(mDB, id);
 			if (r.mGuid.equals(installGuid))
@@ -44,9 +45,10 @@ public class GetInstallation extends DBInterface
 	
 				if (r.mFences.size() == 0)
 					r.addFence (new FenceRecord(mDB, id, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
+				return out.toString();
 			}
 		}
 
-		return out.toString();
+		return new Error ("1", "No record found", "").toString();
 	}
 }
