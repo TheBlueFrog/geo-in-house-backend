@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 
 import com.ebay.mike.geodb.DB;
-import com.ebay.mike.geodb.FenceRecord;
 import com.ebay.mike.geodb.InstallationRecord;
 
 /**
@@ -46,8 +45,8 @@ public class GetInstallations extends DBInterface
 
 			list.put(r.toJSON());
 
-			if (r.mFences.size() == 0)
-				r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
+//			if (r.mFences.size() == 0)
+//				r.addFence (new FenceRecord(mDB, i, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
 		}
 
 //		{	// TEST code

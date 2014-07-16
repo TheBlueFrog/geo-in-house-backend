@@ -40,7 +40,6 @@ public class PutNewFence extends DBInterface
 	public String innerProcess() throws SQLException
 	{
 		long id = DB.getGuidID(mDB, mParams.get("InstallationGUID"));
-		id = 13;
 		InstallationRecord install = new InstallationRecord(mDB, id);
 		
 		install.addFence(new FenceRecord(mDB, 

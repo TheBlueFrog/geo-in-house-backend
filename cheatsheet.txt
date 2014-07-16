@@ -1,17 +1,18 @@
 
 on cloud box
 
+external IP
+http://66.211.190.18
+
+get in to root on virtual box
 ssh -i ~/Downloads/pairtwo.pem root@10.64.186.4
 
-
-
-on local machine to ftp
-
+on local machine to ftp to virtual box
 sftp -i ~/Downloads/pairtwo.pem root@10.64.186.4
 
 
 
-#on local box to test in-cloud Ping code 
+#on local box to test server-side code on virtual box 
 #
 curl -d "OpCode=Ping&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe8&Domain=frlibtest&Application=FRLIB_TEST_2&IdentityProvider=EbayInc&UserName=mike@fred&EventName=ping&Message=<Data><Key>Title</Key><Value>Some title</Value></Data><Data><Key>Body</Key><Value>And a body</Value></Data>" http://66.211.190.18/cgi-bin/toJava.pl
 

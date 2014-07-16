@@ -3,7 +3,6 @@ package com.ebay.mike;
 import java.sql.SQLException;
 
 import com.ebay.mike.geodb.DB;
-import com.ebay.mike.geodb.FenceRecord;
 import com.ebay.mike.geodb.InstallationRecord;
 
 /**
@@ -43,12 +42,12 @@ public class GetInstallation extends DBInterface
 			{
 				out = r;
 	
-				if (r.mFences.size() == 0)
-					r.addFence (new FenceRecord(mDB, id, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
+//				if (r.mFences.size() == 0)
+//					r.addFence (new FenceRecord(mDB, id, "testFence", -122.6, 45.3, 101.1, 3, "a fence url"));
 				return out.toString();
 			}
 		}
 
-		return new Error ("1", "No record found", "").toString();
+		return new com.ebay.mike.abstractdb.Error ("1", "No record found", "").toString();
 	}
 }

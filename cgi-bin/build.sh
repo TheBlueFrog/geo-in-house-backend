@@ -14,6 +14,7 @@ rm -Rf __MACOSX
 mkdir bin
 
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/UploadData.java -d bin
+javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/GetInstallation.java -d bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/GetInstallations.java -d bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/PutNewInstallation.java -d bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/PutNewFence.java -d bin
