@@ -1,10 +1,13 @@
 package com.ebay.mike.abstractdb;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class AbstractFenceRecord extends AbstractRecord 
 {
+	private static final String TAG = AbstractFenceRecord.class.getSimpleName();
+	
 	public long mID;
 	public long mInstallationID;
 	public String mGuid;
@@ -25,7 +28,7 @@ public class AbstractFenceRecord extends AbstractRecord
 		return toJSON().toString();
 	}
 
-	public AbstractFenceRecord(JSONObject j)
+	public AbstractFenceRecord(JSONObject j) throws JSONException
 	{
 		mID = j.getLong("id");
 		mInstallationID = j.getLong("InstallationID");
@@ -41,17 +44,31 @@ public class AbstractFenceRecord extends AbstractRecord
 	public JSONObject toJSON() 
 	{
 		JSONObject j = new JSONObject();
-		j.put("id", mID);
-		j.put("InstallationID", mInstallationID);
-		j.put("Guid", mGuid);
-		j.put("DisplayName", mDisplayName);
-		j.put("Latitude", mLatitude);
-		j.put("Longitude", mLongitude);
-		j.put("Radius", mRadius);
-		j.put("Events", mEvents);
-		j.put("URI", mURI);
-		
-		String jsonText = j.toString();
+		try
+		{
+			j.put("id", mID);
+			j.put("InstallationID", mInstallationID);
+			j.put("Guid", mGuid);
+			j.put("DisplayName", mDisplayName);
+			j.put("Latitude", mLatitude);
+			j.put("Longitude", mLongitude);
+			j.put("Radius", mRadius);
+			j.put("Events", mEvents);
+			j.put("URI", mURI);
+			
+			String jsonText = j.toString();
+		}
+		catch (JSONException e)
+		{
+			try
+			{
+				j.put("Error", new Error ("", e.getClass().getSimpleName(), e.getMessage()));
+			}
+			catch (JSONException e1)
+			{
+				e1.printStackTrace();
+			}
+		}
 		return j;
 	}
 }
