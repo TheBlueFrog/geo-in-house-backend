@@ -1,10 +1,13 @@
 package com.ebay.mike.abstractdb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.ebay.mike.geodb.EventForwardingTargetRecord;
 
 public class AbstractEventForwardingRecord extends AbstractRecord 
 {
@@ -14,14 +17,23 @@ public class AbstractEventForwardingRecord extends AbstractRecord
 	public long mFenceID;
 	public long mInstallationID;
 	
-	/** event type we match */
+	/** event type we match 
+	 * 
+	 * if this is of type "FenceEnter" then the mFenceID will indicate
+	 * which fence we entered, if the fence isn't configured for enter
+	 * then this event is not forwarded.
+	 * 
+	 * otherwise it's null and not used, e.g. event of type "GeoLocation" 
+	 * don't care about a fence
+	 */
 	public int mIncomingEventType;
 	
 	/** installations to forward to */
-	protected List<AbstractEventForwardingTargetRecord> mTargets;
+	protected List<AbstractEventForwardingTargetRecord> mTargets = new ArrayList<AbstractEventForwardingTargetRecord>();
 	
 	protected AbstractEventForwardingRecord() 
 	{
+		super();
 	}
 
 	@Override
@@ -66,6 +78,11 @@ public class AbstractEventForwardingRecord extends AbstractRecord
 			}
 		}
 		return j;
+	}
+
+	public void addTarget(EventForwardingTargetRecord eft)
+	{
+		mTargets.add (eft);
 	}
 
 }

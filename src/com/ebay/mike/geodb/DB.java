@@ -26,31 +26,24 @@ public class DB
 		DisplayName
 		GCMRegistrationID
 	
-	Fences
-		id
-		InstallationID		row id of Installation
-		DisplayName			of the fence
-		Latitude			center of the fence
-		Longitude
-		Radius				of the fence, in meters
-		Crossing			which crossings to pay attention to 
-	  						0 = none
-	  						1 = enter
-	 						2 = exit
-	  						3 = both
-	 
-		Url					an URL for the app to use with the fence 
+CREATE TABLE Fences
+    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    InstallationID INTEGER, 
+    Guid TEXT, 
+    DisplayName TEXT,
+ Latitude NUMBER, Longitude NUMBER, 
+ Radius NUMBER, 
+ Events INTEGER, 
+ URI TEXT);
 	
-	EventForwardings
-		id
-		FenceID
-		InstallationID		row id of Installation
-		IncomingEventType
+CREATE TABLE EventForwardings
+    (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    FenceID INTEGER,
+    InstallationID INTEGER,
+    IncomingEventType INTEGER
+    );
 		
-	EventForwardingTargets
-		id
-		EvenForwardingID	EventForwarding row id we belong to
-		InstallationID		row id of Installation to forward the event to
+CREATE TABLE EventForwardingTargets (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, EvenForwardingID INTEGER,InstallationID INTEGER);
 	
 	*/
 	
@@ -207,7 +200,7 @@ public class DB
 			ResultSet rs = s.executeQuery();
 			while (rs.next())
 			{
-				v.add(new EventForwardingRecord(rs));
+				v.add(new EventForwardingRecord(db, rs));
 			}
 			return v;
 			
@@ -236,6 +229,29 @@ public class DB
 			}
 			return v;
 			
+		} 
+		finally
+		{
+			if (s != null)
+				s.close();
+		}
+	}
+
+	public static long getFenceIDFromGUID(Connection db, String fenceGUID) throws SQLException
+	{
+		PreparedStatement s = null;
+		
+		try 
+		{
+			String q = String.format("select * from Fences where (Guid = %d)", fenceGUID);
+			s = db.prepareStatement(q);
+			ResultSet rs = s.executeQuery();
+			while (rs.next())
+			{
+				FenceRecord r = new FenceRecord(rs);
+				return r.mID;
+			}
+			return -1;
 		} 
 		finally
 		{

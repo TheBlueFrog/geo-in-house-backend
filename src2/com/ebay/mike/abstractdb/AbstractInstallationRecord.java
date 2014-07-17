@@ -28,7 +28,9 @@ public class AbstractInstallationRecord extends AbstractRecord
 	/** Fences of this installation */
 	public List<AbstractFenceRecord> mFences = new ArrayList<AbstractFenceRecord>();
 
-
+	/** event forwarding list */
+	public List<AbstractEventForwardingRecord> mForwardings = new ArrayList<AbstractEventForwardingRecord>();
+	
 	protected AbstractInstallationRecord()
 	{
 	}
@@ -63,6 +65,12 @@ public class AbstractInstallationRecord extends AbstractRecord
 			fences.put(f.toJSON());
 		
 		j.put("Fences", fences);
+		
+		JSONArray forwardings = new JSONArray();
+		for (AbstractEventForwardingRecord f : mForwardings)
+			forwardings.put(f.toJSON());
+		
+		j.put("Forwardings", fences);
 		
 		String jsonText = j.toString();
 		return j;

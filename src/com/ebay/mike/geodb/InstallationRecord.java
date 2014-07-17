@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.ebay.mike.abstractdb.AbstractEventForwardingRecord;
 import com.ebay.mike.abstractdb.AbstractInstallationRecord;
 
 /**
@@ -137,6 +138,23 @@ public class InstallationRecord extends AbstractInstallationRecord
 	public void addFence(FenceRecord r) 
 	{
 		mFences.add(r);
+	}
+
+	public void addForwarding(EventForwardingRecord r)
+	{
+		mForwardings.add(r);
+	}
+
+	public EventForwardingRecord getEventForwarding(long id)
+	{
+		for (AbstractEventForwardingRecord f : mForwardings)
+		{
+			if (f.mID == id)
+			{
+				return (EventForwardingRecord) f;
+			}
+		}
+		return null;
 	}
 
 }
