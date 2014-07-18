@@ -187,9 +187,12 @@ public class SendMessage
 		  .append(      "<Type>User</Type>")
 		  .append(      "<Provider>").append(mIdentityProvider).append("</Provider>")
 		  .append(      "<Id>").append(mUserName).append("</Id>")
-		  .append(      "<Domain>").append(mDomain).append("</Domain>")
-		  .append(      "<Application>").append(mApplication).append("</Application>")
-		  .append(      "<EventName>").append(mEventName).append("</EventName>")
+		  .append(      "<Domain>").append(mDomain).append("</Domain>");
+		
+		if (mApplication != null)
+			sb.append(      "<Application>").append(mApplication).append("</Application>");
+			
+		sb.append(      "<EventName>").append(mEventName).append("</EventName>")
 		  .append(    "</Receiver>")
 		  .append(    "<Data>")
           .append(      "<Payload>").append("<![CDATA[").append(body).append("]]>").append("</Payload>")
