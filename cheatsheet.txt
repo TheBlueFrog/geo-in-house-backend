@@ -12,14 +12,28 @@ sftp -i ~/Downloads/pairtwo.pem root@10.64.186.4
 
 
 
+# raw into QA MDNS
+curl -d "Content-Type=application/xml&Authorization=APP FRLIB_TEST_2_A&Accept=application/xml\
+&xml=<Data><Key>Time</Key><Value>101010101</Value><Key>Title</Key><Value>title</Value><Key>Body</Key><Value>some body</Value></Data>" \
+http://api4.qa.ebay.com/mobile/DeviceNotificationService/v1
+
+# raw into production MDNS
+
+curl -d "Content-Type=application/xml&Authorization=APP FRLIB_TEST_2_A&Accept=application/xml\
+&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe\
+&xml=<Data><Key>Time</Key><Value>101010101</Value><Key>Title</Key><Value>title</Value><Key>Body</Key><Value>some body</Value></Data>" \
+https://mobinotify.ebay.com/mobile/DeviceNotificationService/v1
+
+
+
 #on any box to test server-side code on C3 server
 #
 curl -d "OpCode=Ping\
 &SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe8\
-&Domain=frlibtest\
-&Application=FRLIB_TEST_2\
+&Domain=frlibtest2\
+&Application=FRLIB_TEST_2_A\
 &IdentityProvider=EbayInc\
-&UserName=sally@fred\
+&UserName=frlibtest1\
 &EventName=ping\
 &Message=<Data><Key>Time</Key><Value>101010101</Value><Key>Title</Key><Value>title</Value><Key>Body</Key><Value>some body</Value></Data>" \
 http://66.211.190.18/cgi-bin/toJava.pl
@@ -32,7 +46,8 @@ curl -d "OpCode=GetInstallations" http://66.211.190.18/cgi-bin/toJava.pl
 curl -d "OpCode=GetInstallation&InstallationGUID=0da243b3-6cb4-47b1-8444-810ce77ce7d9" http://66.211.190.18/cgi-bin/toJava.pl
 
 # emulate an external MDNS server event
-curl -d "OpCode=SendMessage&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe\
+curl -d "OpCode=SendMessage\
+&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe\
 8&Application=FRLIB_TEST_2_A\
 &IdentityProvider=EbayInc\
 &UserName=sally@fred\
