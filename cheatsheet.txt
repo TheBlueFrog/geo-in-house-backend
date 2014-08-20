@@ -21,9 +21,12 @@ http://api4.qa.ebay.com/mobile/DeviceNotificationService/v1
 
 curl -d "Content-Type=application/xml&Authorization=APP FRLIB_TEST_2_A&Accept=application/xml\
 &SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe\
-&xml=<Data><Key>Time</Key><Value>101010101</Value><Key>Title</Key><Value>title</Value><Key>Body</Key><Value>some body</Value></Data>" \
+&xml=%3CData%3E%3CKey%3EBody%3C%2FKey%3E%3CValue%3EClick+to+switch+to+%3C%2FValue%3E%3C%2FData%3E%3CData%3E%3CKey%3ETitle%3C%2FKey%3E%3CValue%3EMessage+from+android-mdns-demo%3C%2FValue%3E%3C%2FData%3E%3CData%3E%3CKey%3ETime%3C%2FKey%3E%3CValue%3E1408490457933%3C%2FValue%3E%3C%2FData%3E" \
 https://mobinotify.ebay.com/mobile/DeviceNotificationService/v1
 
+
+
+&Message=%3CData%3E%3CKey%3EBody%3C%2FKey%3E%3CValue%3EClick+to+switch+to+%3C%2FValue%3E%3C%2FData%3E%3CData%3E%3CKey%3ETitle%3C%2FKey%3E%3CValue%3EMessage+from+android-mdns-demo%3C%2FValue%3E%3C%2FData%3E%3CData%3E%3CKey%3ETime%3C%2FKey%3E%3CValue%3E1408490457933%3C%2FValue%3E%3C%2FData%3E\
 
 
 #on any box to test server-side code on C3 server
@@ -45,16 +48,39 @@ curl -d "OpCode=PutNewFence&Radius=50.0&Events=3&Latitude=45.544&Longitude=-122.
 curl -d "OpCode=GetInstallations" http://66.211.190.18/cgi-bin/toJava.pl
 curl -d "OpCode=GetInstallation&InstallationGUID=0da243b3-6cb4-47b1-8444-810ce77ce7d9" http://66.211.190.18/cgi-bin/toJava.pl
 
-# emulate an external MDNS server event
+
+
+
+# Production emulate an external MDNS server event (working)
 curl -d "OpCode=SendMessage\
-&SOAAppName=eBayInc73-c2b2-4710-876a-f3184aabbe\
-8&Application=FRLIB_TEST_2_A\
+&Endpoint=https://mobinotify.ebay.com/mobile/mds/v1/sendMessages\
+&SOAAppName=eBayInc92-f735-4670-9174-ae82ad908f9\
+&Domain=frlibtest2\
+&Application=FRLIB_TEST_2_A\
 &IdentityProvider=EbayInc\
-&UserName=sally@fred\
+&UserName=frlibtest1\
+&EventName=ping\
+&Message=<Data><Key>Title</Key><Value>Some title</Value></Data><Data><Key>Body</Key><Value>And a body</Value></Data>" \
+http://66.211.190.18/cgi-bin/toJava.pl
+
+
+# QA emulate an external MDNS server event
+curl -d "OpCode=SendMessage\
+&Endpoint=http://api4.qa.ebay.com/mobile/mds/v1/sendMessages\
+&SOAAppName=FRLIB_TEST_2_A\
+&Application=FRLIB_TEST_2_A\
+&IdentityProvider=EbayInc\
+&UserName=frlibtest1\
 &Domain=frlibtest2\
 &EventName=ping\
-&Message=<Data><Key>Time</Key><Value>101010101</Value><Key>Title</Key><Value>title</Value><Key>Body</Key><Value>some body</Value></Data>" \
+&Message=<Data><Key>Title</Key><Value>Some title</Value></Data><Data><Key>Body</Key><Value>And a body</Value></Data>" \
 http://66.211.190.18/cgi-bin/toJava.pl
+
+
+
+
+
+
 
 set MYLIBS "~/Downloads/
 

@@ -30,12 +30,14 @@ public class SendMessage
 	 * [2, 3] = name, value
 	 */
 	
-	static String mIdentityProvider		= "EbayInc";
-	static String mSOAAppName 			= "eBayInc73-c2b2-4710-876a-f3184aabbe8";
-	static String mApplication			= "FRLIB_TEST_2";
-	static String mDomain 				= "frlibtest";
-	static String mUserName         	= "mike@fred";
-	static String mEventName			= "ping";
+	static String mEndpoint				= "https://mobinotify.ebay.com/mobile/mds/v1/sendMessages";
+	
+	static String mIdentityProvider		= "";
+	static String mSOAAppName 			= "";
+	static String mApplication			= "";
+	static String mDomain 				= "";
+	static String mUserName         	= "";
+	static String mEventName			= "";
 	static String mMessage   			= "";
 	
 	static private final String replacementToken = "%%Body%%";
@@ -75,7 +77,12 @@ public class SendMessage
 //			System.out.println(String.format("%s = %s", args[i], args[i+1]));
 		}
 
-		// extract params
+		// extract optional params
+
+//		if (params.containsKey("Endpoint"))
+//			mEndpoint = params.get("Endpoint");
+		
+		// extract required params
 		
 		mSOAAppName = params.get("SOAAppName");
 		mDomain = params.get("Domain");
@@ -92,7 +99,7 @@ public class SendMessage
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 	        try
 	        {
-	            HttpPost r = new HttpPost("https://mobinotify.ebay.com/mobile/mds/v1/sendMessages");
+	            HttpPost r = new HttpPost(mEndpoint);//"https://mobinotify.ebay.com/mobile/mds/v1/sendMessages");
 	            addHeaders (r);
 	            addParams (r);
 	            addBody (r);
@@ -202,7 +209,7 @@ public class SendMessage
 		  .append("</SendMessageRequest>")
 		  ;
 		
-//		Log(sb.toString());
+		Log(sb.toString());
 		
 		StringEntity xmlEntity = new StringEntity(sb.toString(), "UTF-8");
 		r.setEntity(xmlEntity );
