@@ -79,8 +79,8 @@ public class SendMessage
 
 		// extract optional params
 
-//		if (params.containsKey("Endpoint"))
-//			mEndpoint = params.get("Endpoint");
+		if (params.containsKey("Endpoint"))
+			mEndpoint = params.get("Endpoint");
 		
 		// extract required params
 		
@@ -99,6 +99,8 @@ public class SendMessage
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 	        try
 	        {
+//	        	Log ("Endpoint: " + mEndpoint);
+	        	
 	            HttpPost r = new HttpPost(mEndpoint);//"https://mobinotify.ebay.com/mobile/mds/v1/sendMessages");
 	            addHeaders (r);
 	            addParams (r);
@@ -209,7 +211,7 @@ public class SendMessage
 		  .append("</SendMessageRequest>")
 		  ;
 		
-		Log(sb.toString());
+//		Log(sb.toString());
 		
 		StringEntity xmlEntity = new StringEntity(sb.toString(), "UTF-8");
 		r.setEntity(xmlEntity );
@@ -223,7 +225,7 @@ public class SendMessage
 			new BasicHeader("Authorization", "APP " + mSOAAppName),
 			new BasicHeader("Accept", "application/xml"),
 		};
-		Log(v);
+//		Log(v);
 		
         r.setHeaders(v);
 	}
