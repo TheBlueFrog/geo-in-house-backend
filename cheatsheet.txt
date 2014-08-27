@@ -62,8 +62,8 @@ curl -d "OpCode=SendMessage\
 &EventName=ping\
 &Message=<Data><Key>Title</Key><Value>Some title</Value></Data><Data><Key>Body</Key><Value>And a body</Value></Data>" \
 http://66.211.190.18/cgi-bin/toJava.pl
-
-
+#
+#
 # QA emulate an external MDNS server event
 curl -d "OpCode=SendMessage\
 &Endpoint=http://api4.qa.ebay.com/mobile/mds/v1/sendMessages\
@@ -75,7 +75,6 @@ curl -d "OpCode=SendMessage\
 &EventName=ping\
 &Message=<Data><Key>Title</Key><Value>Some title</Value></Data><Data><Key>Body</Key><Value>And a body</Value></Data>" \
 http://66.211.190.18/cgi-bin/toJava.pl
-
 
 
 
