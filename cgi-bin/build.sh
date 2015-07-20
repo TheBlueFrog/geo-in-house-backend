@@ -22,4 +22,6 @@ javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/PutNewInstal
 
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/SendMessage.java -d bin
 javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/UploadData.java -d bin
+javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/LoginKijijiCA.java -d bin
+javac -sourcepath src:src2 -classpath bin:$MYLIBS src/com/ebay/mike/LoginAlamaulaAR.java -d bin
 
